@@ -93,10 +93,10 @@
             </div>
 		</div>
 		<br>
-		<div class="control-group">
+		<div class="control-group" ng-show="attraction.id">
 			<label class="control-label" for="inputAttractionImages">Images: </label>
-        	<div class="controls">
-        		<input type="file" id="inputAttractionImages" file-model="files" multiple/>
+        	<div class="controls" >
+        		<input type="file" id="inputAttractionImages" file-model="files" multiple />
         		<img id='attractionsImageThrobber' src='img/busy.gif' style='display:none'/>
         	</div>
         </div>

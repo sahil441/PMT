@@ -24,6 +24,10 @@ angular.module('penut', [ 'penut.services', 'penut.controllers' ]).config(
 				templateUrl : 'partials/attraction-list.html',
 				controller : 'AttractionListCtrl'
 			});
+			$routeProvider.when('/attraction-update/:id', {
+				templateUrl : 'partials/attraction-detail.html',
+				controller : 'AttractionFormCtrl'
+			});
 			$routeProvider.otherwise({
 				redirectTo : '/welcome'
 			});

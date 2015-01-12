@@ -120,17 +120,23 @@ var app = angular.module('penut.controllers', []);
       }]);
 
 
-	app.controller('AttractionFormCtrl',['$scope', '$routeParams', 'AttractionForm', '$location',
-      function ($scope, $routeParams, AttractionForm, $location) {
+	app.controller('AttractionFormCtrl',['$scope', '$routeParams', 'AttractionForm','fileUpload', '$location',
+      function ($scope, $routeParams, AttractionForm,fileUpload, $location) {
 		
 		if($routeParams.id) {
 			$scope.attraction=AttractionForm.show({id: $routeParams.id});
 		} else {
-			$routeParams.city={};
+			$routeParams.attraction={};
 		}
 		
 		$scope.save = function () {
 			AttractionForm.update($scope.attraction);
+			var file = $scope.files;
+			if($routeParams.id && file!=undefined) {
+            console.log('file is ' + JSON.stringify(file));
+            var uploadUrl = "/attachment/upload";
+            fileUpload.uploadFileToUrl(file, uploadUrl);
+			}
 			$location.path('/attraction-list');
 		}
 		
@@ -140,12 +146,22 @@ var app = angular.module('penut.controllers', []);
 		
 	}]);
 	
-	app.controller('AttractionListCtrl',['$scope', '$routeParams', 'AttractionList', '$location',
-	  function ($scope, $routeParams, AttractionList, $location) {
+	app.controller('AttractionListCtrl',['$scope', '$routeParams', 'AttractionList','AttractionForm', '$location',
+	  function ($scope, $routeParams, AttractionList,AttractionForm, $location) {
 		$scope.attractions = AttractionList.query();
+		
+		$scope.editAttraction = function (AttractionId) {
+            $location.path('/attraction-update/' + AttractionId);
+        };
+        
+        $scope.deleteAttraction = function (AttractionId) {
+        	AttractionForm.delete({ id: AttractionId });
+            $scope.attractions = AttractionList.query();
+        };
+        
 	}]);
 	
-	app.directive('fileModel', ['$parse','fileUpload', function ($parse, fileUpload) {
+	app.directive('fileModel', ['$parse', function ($parse) {
 	    return {
 	        restrict: 'A',
 	        link: function(scope, element, attrs) {
@@ -156,10 +172,6 @@ var app = angular.module('penut.controllers', []);
 	                scope.$apply(function(){
 	                    modelSetter(scope, element[0].files);
 	                });
-	                var file = scope.files;
-	                console.log('file is ' + JSON.stringify(file));
-	                var uploadUrl = "/attachment/upload";
-	                fileUpload.uploadFileToUrl(file, uploadUrl);
 	            });
 	        }
 	    };

@@ -1,10 +1,42 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
-<h1>Attraction List Page</h1>
-</body>
-</html>
+<div class="span6">
+	<h2>Attraction List</h2>
+	<table class="table table-striped table-condensed">
+		<thead>
+			<tr>
+				<th style="min-width: 80px;">Name</th>
+				<th style="min-width: 80px;">Address</th>
+				<th style="min-width: 80px;">Address2</th>
+				<th style="min-width: 80px;">State</th>
+				<th style="min-width: 80px;">Postal Code</th>
+				<th style="min-width: 80px;">Country</th>
+				<th style="min-width: 80px;">Phone Number</th>
+				<th style="min-width: 80px;">Entry Ticket</th>
+				<th style="min-width: 80px;">Description</th>
+				<th style="min-width: 80px;">Time Required</th>
+				<th style="min-width: 80px;">Popularity</th>
+				<th style="width: 20px;"></th>
+				<th style="width: 20px;"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="attraction in attractions">
+				<td>{{ attraction.name }}</td>
+				<td>{{ attraction.address }}</td>
+				<td>{{ attraction.address2 }}</td>
+				<td>{{ attraction.state }}</td>
+				<td>{{ attraction.postalCode }}</td>
+				<td>{{ attraction.country }}</td>
+				<td>{{ attraction.phoneNumber }}</td>
+				<td>{{ attraction.hasEntryTicket }}</td>
+				<td>{{ attraction.aboutText }}</td>
+				<td>{{ attraction.timeRequired }}</td>
+				<td>{{ attraction.popularity }}</td>
+				<td><a ng-click="editAttraction(attraction.id)"
+					class="btn btn-small btn-primary">Edit</a></td>
+				<td><a ng-click="deleteAttraction(attraction.id)"
+					class="btn btn-small btn-danger">Delete</a></td>
+			</tr>
+		</tbody>
+	</table>
+	<a ng-click="addCity()" class="btn btn-small">Add New Attraction</a>
+</div>

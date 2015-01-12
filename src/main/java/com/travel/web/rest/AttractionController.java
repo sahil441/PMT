@@ -38,7 +38,7 @@ public class AttractionController {
 
 	@RequestMapping(value = "/form/{id}", method = RequestMethod.GET)
 	public Attraction getAttraction(final @PathVariable Integer id) {
-		return attractionRepository.getOne(id);
+		return attractionRepository.findOne(id);
 	}
 
 	@RequestMapping(value = "/form/{id}", method = RequestMethod.DELETE)

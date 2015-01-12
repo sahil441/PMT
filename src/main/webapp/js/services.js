@@ -52,22 +52,6 @@ services.factory('CityForm', function ($resource) {
     })
 });
 
-services.factory('AttractionList', function ($resource) {
-    return $resource('/attraction/list', {}, {
-        query: { method: 'GET', isArray: true },
-    })
-});
-
-services.factory('AttractionForm', function($resource) {
-    	return $resource('/attraction/form/:id', {}, {
-            show: { method: 'GET' },
-            newAttraction: { method: 'GET' },
-            create: { method: 'POST' },
-            update: { method: 'POST', params: {id: '@id'} },
-            delete: { method: 'DELETE', params: {id: '@id'} }
-        })
-});
-
 services.service('fileUpload', ['$http', function ($http) {
     this.uploadFileToUrl = function(file, uploadUrl){
         var fd = new FormData();
