@@ -1,0 +1,54 @@
+<div class="container">
+    <h2>City Details!</h2>
+
+    <form novalidate="novalidate" class="form-horizontal">
+    	
+    	<input type="hidden" name="id" value="{{city.id}}"/>
+        <div class="control-group">
+            <label class="control-label" for="inputCountryText">Country:</label>
+            <div class="controls">
+             	<select ng-options="countryName as countryName for countryName in allCountries" ng-model="city.country" ng-change="refreshCities()"/>
+            </div>
+        </div>
+        
+        <div class="control-group">        	
+            <label class="control-label" for="inputCityName">Select City:</label>
+            <div class="controls">
+            	<select ng-options="item.value as item.key for item in citiesInCountry" ng-model="city.name"/>           
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label class="control-label" for="inputAboutText">About:</label>
+            <div class="controls">
+                <textarea id="inputAboutText" ng-model="city.abouttext"/>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label class="control-label" for="howtoreach">How to reach?</label>
+            <div class="controls">
+                <textarea id="howtoreach" ng-model="city.howtoreach"/>
+            </div>
+        </div>
+
+		<legend>Select tags!</legend>
+		<div class="control-group">
+			  <div ng-repeat="tag in allCityTags">				 
+				  <div  class="controls">
+				     <label class="control-label" for="{{tag.displayText}}">{{tag.displayText}} 
+				 	 	<input type="checkbox" name="{{tag.displayText}}" id="{{tag.id}}" ng-model="tag.checked" ng-change="selectTags()" />
+				  	 </label>
+				  </div>
+			  </div>				
+		</div>
+		        
+        <div class="control-group">
+            <div class="controls">
+              	<!-- city -detail.html: -->
+                <a ng-click="cancel()" class="btn btn-small">Cancel</a>                
+                <a ng-click="save()" class="btn btn-small btn-primary">Save</a>              
+            </div>
+        </div>
+    </form>
+</div>

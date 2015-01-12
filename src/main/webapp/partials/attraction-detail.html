@@ -1,0 +1,110 @@
+<div class="container">
+    <h2>Attraction Details</h2>
+    <form novalidate="novalidate" class="form-horizontal" enctype="multipart/form-data">
+        <div class="control-group">
+            <!-- Drop Box -->
+            <label class="control-label" for="inputAttractionName">Name:</label>
+            <div class="controls">
+                <input type="text" id="inputAttractionName" ng-model="attraction.name" />
+            </div>
+        </div>
+        <hr style="border: none; height: 1px; color: #F0F0F0; background: #F0F0F0 ;" />
+        <div class="control-group">
+            <label class="control-label" for="inputAddress">Address:</label>
+            <div class="controls">
+                <input type="text" id="inputAddress" ng-model="attraction.address" />
+            </div>
+        </div>
+        <br>
+        <div class="control-group">
+            <label class="control-label" for="inputAddress1">Address2:</label>
+            <div class="controls">
+                <input type="text" id="inputAddress1" ng-model="attraction.address2" />
+            </div>
+		</div>
+		<br/>
+		<div class="control-group">
+            <label class="control-label" for="inputState">State:</label>
+            <div class="controls">
+                <input type="text" id="inputState" ng-model="attraction.state" />
+            </div>
+		</div>
+            <br>
+		<div class="control-group">
+            <label class="control-label" for="inputPostalCode">PostalCode:</label>
+            <div class="controls">
+                <input type="text" id="inputPostalCode" ng-model="attraction.postalCode" />
+            </div>
+		</div>
+		<br>
+		<div class="control-group">
+            <label class="control-label" for="inputCountry">Country:</label>
+            <div class="controls">
+                <input type="text" id="inputCountry" ng-model="attraction.country" />
+            </div>
+		</div>
+            <hr style="border: none; height: 1px; color: #F0F0F0; background: #F0F0F0 ;" />
+		<div class="control-group">
+            <label class="control-label" for="inputPhoneNumber">Phone Number:</label>
+            <div class="controls">
+                <input type="text" id="inputPhoneNumber" ng-model="attraction.phoneNumber" />
+            </div>
+		</div>
+        <br>
+		<div class="control-group">
+            <label class="control-label" for="inputHasEntryTicket">Entry Ticket ?:</label>
+            <div class="controls">
+                <select id="inputHasEntryTicket" class="selectpicker" ng-model="attraction.hasEntryTicket">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+		</div>
+        <br>
+		<div class="control-group">
+                <label class="control-label" for="inputDescription">Description: </label>
+                <div class="controls">
+                    <textarea id="inputDescription" ng-model="attraction.aboutText"/><br>
+                    <span> {{255 - attraction.aboutText.length}} characters remaining</span>
+                </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputTimeRequired">Time Required (in hours):</label>
+            <div class="controls">
+                <input type="text" id="inputTimeRequired" ng-model="attraction.timeRequired" />
+            </div>
+		</div>
+        <br>
+        <div class="control-group">
+            <label class="control-label" for="inputPrefferedTimings">Preferred Timings:</label>
+            <div class="controls">
+                <input type="time" id="inputPrefferedTimings" ng-model="attraction.prefferedStartTiming" placeholder="HH:MM A.M"
+                   min="00:00:00" max="23:59:59"/>
+                   TO   
+                <input type="time" id="inputPrefferedTimings" ng-model="attraction.prefferedEndTiming" placeholder="HH:MM A.M"
+                   min="00:00:00" max="23:59:59"/>
+            </div>
+		</div>
+		<br>
+		<div class="control-group">
+            <label class="control-label" for="inputPopularity">Popularity:</label>
+            <div class="controls">
+                <input type="number" id="inputPopularity" ng-model="attraction.popularity" />
+            </div>
+		</div>
+		<br>
+		<div class="control-group">
+			<label class="control-label" for="inputAttractionImages">Images: </label>
+        	<div class="controls">
+        		<input type="file" id="inputAttractionImages" file-model="files" multiple/>
+        		<img id='attractionsImageThrobber' src='img/busy.gif' style='display:none'/>
+        	</div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <a ng-click="cancel()" class="btn btn-small">Cancel</a>
+                <a ng-click="save()" class="btn btn-small btn-primary">Save</a>
+            </div>
+        </div>
+    </form>
+</div>

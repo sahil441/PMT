@@ -1,0 +1,62 @@
+[
+	{
+	    "countryId": "India",
+	    "countryName": "India",
+	    "city": [
+	    	{
+	            "key": "Delhi",
+	            "value": "Delhi"
+	        }, {
+	            "key": "Mumbai",
+	            "value": "Mumbai"
+	        }, {
+	            "key": "Chennai",
+	            "value": "Chennai"
+	        }, {
+	            "key": "Bombay",
+	            "value": "Bombay"
+	        }]
+	},
+	{
+	    "countryId": "USA",
+	    "countryName": "USA",
+	    "city": [
+	    	{
+	            "key": "Austin",
+	            "value": "Austin"
+	        }, {
+	            "key": "Bostan",
+	            "value": "Bostan"
+	        }, {
+	            "key": "Chicago",
+	            "value": "Chicago"
+	        }, {
+	            "key": "Denver",
+	            "value": "Denver"
+	        }]
+	}, 
+	{
+	    "countryId": "Australia",
+	    "countryName": "Australia",
+	    "city":[
+	    	{
+	            "key": "Sidney",
+	            "value": "Sidney"
+	        }, {
+	            "key": "Melbourn",
+	            "value": "Melbourn"
+	        }]
+	},
+	{
+	    "countryId": "Britain",
+	    "countryName": "Britain",
+	    "city": [
+	    	{
+	            "key": "London",
+	            "value": "London"
+	        }, {
+	            "key": "Cardiff",
+	            "value": "Cardiff"
+	        }]
+	}
+]

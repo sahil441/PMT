@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" ng-app="penut">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pen your Trip!</title>
+<link rel="stylesheet" href="css/app.css" />
+<link rel="stylesheet" href="css/bootstrap/bootstrap-responsive.min.css" />
+<link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+</head>
+<body>
+	<ul class="nav nav-pills">
+		<li><a href="#/welcome">Welcome</a></li>
+		<li><a href="#/city-list">City List</a></li>		
+		<li><a href="#/city-add">Add City!</a></li>
+		<li><a href="#/attraction-list">Attraction List</a></li>
+		<li><a href="#/attraction-add">Add Attraction</a></li>
+	</ul>
+	<div id="throbber" style="display:none;">
+       <img src="img/busy.gif" />
+    </div>
+	<div ng-view></div>
+
+	<!-- JQuery ================================================================ -->
+	<script src="js/jquery/jquery-2.0.3.js"></script>
+
+	<!-- Bootstrap ============================================================= -->
+	<script src="js/bootstrap/bootstrap.js"></script>
+
+	<!-- AngularJS ============================================================= -->
+	<!-- In production use:
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+-->
+	<script src="lib/angular/angular.js"></script>
+	<script src="lib/angular/angular-resource.js"></script>
+
+	<!-- AngularJS App Code ==================================================== -->
+	<script src="js/app.js"></script>
+	<script src="js/services.js"></script>
+	<script src="js/controllers.js"></script>
+
+</body>
+</html>
