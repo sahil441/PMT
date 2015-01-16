@@ -55,7 +55,7 @@ public class Attraction implements Serializable {
 	private boolean hasEntryTicket;
 	
 	@Column(name="timeRequired")
-	private String timeRequired;
+	private Integer timeRequired;
 	
 	@Column(name="prefferedStartTiming") 
 	private String prefferedStartTiming;
@@ -75,9 +75,8 @@ public class Attraction implements Serializable {
 	@Column(name="country")
 	private String country;
 	
-	/*@ManyToOne(optional = false, fetch = FetchType.EAGER)
-	@JoinColumn(name = "city_id", referencedColumnName = "id")*/
-	@JsonIgnore
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@JoinColumn(name = "city_id", referencedColumnName = "id")
 	private City city;
 	
 	@Column(name="state")
@@ -85,4 +84,124 @@ public class Attraction implements Serializable {
 	
 	@Column(name = "popularity", nullable = false)
 	private Integer popularity;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getAboutText() {
+		return aboutText;
+	}
+
+	public void setAboutText(String aboutText) {
+		this.aboutText = aboutText;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public boolean isHasEntryTicket() {
+		return hasEntryTicket;
+	}
+
+	public void setHasEntryTicket(boolean hasEntryTicket) {
+		this.hasEntryTicket = hasEntryTicket;
+	}
+
+	public Integer getTimeRequired() {
+		return timeRequired;
+	}
+
+	public void setTimeRequired(Integer timeRequired) {
+		this.timeRequired = timeRequired;
+	}
+
+	public String getPrefferedStartTiming() {
+		return prefferedStartTiming;
+	}
+
+	public void setPrefferedStartTiming(String prefferedStartTiming) {
+		this.prefferedStartTiming = prefferedStartTiming;
+	}
+
+	public String getPrefferedEndTiming() {
+		return prefferedEndTiming;
+	}
+
+	public void setPrefferedEndTiming(String prefferedEndTiming) {
+		this.prefferedEndTiming = prefferedEndTiming;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getAddress2() {
+		return address2;
+	}
+
+	public void setAddress2(String address2) {
+		this.address2 = address2;
+	}
+
+	public String getPostalCode() {
+		return postalCode;
+	}
+
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public City getCity() {
+		return city;
+	}
+
+	public void setCity(City city) {
+		this.city = city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public Integer getPopularity() {
+		return popularity;
+	}
+
+	public void setPopularity(Integer popularity) {
+		this.popularity = popularity;
+	}
 }

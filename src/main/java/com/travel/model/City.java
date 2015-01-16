@@ -2,8 +2,10 @@ package com.travel.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,6 +19,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -56,18 +59,36 @@ public class City implements Serializable {
 	@Size(max = 255)
 	private String abouttext;
 
-	@Column(name = "howtoreach", length = 255, nullable = false)
-	@NotBlank
-	@Size(max = 255)
-	private String howtoreach;
-
 	@ManyToMany
 	@JoinTable(name = "city_tags", joinColumns = @JoinColumn(name = "tag_id"), inverseJoinColumns = @JoinColumn(name = "city_id"))
 	private Collection<Tag> tags = new ArrayList<>();
 
-	/*@OneToMany(cascade = CascadeType.ALL, mappedBy = "city")
+	@OneToMany(cascade = CascadeType.ALL)
 	@OrderBy("popularity asc")
-	private List<Attraction> attractions = new ArrayList<>();*/
+	private List<Attraction> attractions = new ArrayList<>();
+
+	@Transient
+	private List<String> nearByCityList;
+
+	@Column(name = "nearByCities", length = 255, nullable = true)
+	@Size(max = 255)
+	private String nearByCities;
+
+	// Connectivity
+	@Column(name = "byFlight", length = 255, nullable = true)
+	@NotBlank
+	@Size(max = 255)
+	private String byFlight;
+
+	@Column(name = "byTrain", length = 255, nullable = true)
+	@NotBlank
+	@Size(max = 255)
+	private String byTrain;
+
+	@Column(name = "byRoad", length = 255, nullable = true)
+	@NotBlank
+	@Size(max = 255)
+	private String byRoad;
 
 	public Integer getId() {
 		return id;
@@ -85,10 +106,6 @@ public class City implements Serializable {
 		return abouttext;
 	}
 
-	public String getHowtoreach() {
-		return howtoreach;
-	}
-
 	public Collection<Tag> getTags() {
 		if (tags == null) {
 			tags = new ArrayList<Tag>();
@@ -96,9 +113,32 @@ public class City implements Serializable {
 		return tags;
 	}
 
-	/*public List<Attraction> getAttractions() {
+	public List<Attraction> getAttractions() {
 		return attractions;
-	}*/
+	}
+
+	public List<String> getNearByCityList() {
+		if (nearByCityList == null) {
+			return new ArrayList<String>();
+		}
+		return nearByCityList;
+	}
+
+	public String getNearByCities() {
+		return nearByCities;
+	}
+
+	public String getByFlight() {
+		return byFlight;
+	}
+
+	public String getByTrain() {
+		return byTrain;
+	}
+
+	public String getByRoad() {
+		return byRoad;
+	}
 
 	public void setId(Integer id) {
 		this.id = id;
@@ -116,8 +156,43 @@ public class City implements Serializable {
 		this.abouttext = abouttext;
 	}
 
-	public void setHowtoreach(String howtoreach) {
-		this.howtoreach = howtoreach;
+	public void setTags(Collection<Tag> tags) {
+		this.tags = tags;
+	}
+
+	public void setAttractions(List<Attraction> attractions) {
+		this.attractions = attractions;
+	}
+
+	public void setNearByCityList(List<String> nearByCityList) {
+		this.nearByCityList = nearByCityList;
+		// Setup nearbycities
+		String nearByCities = "";
+		if (nearByCityList != null) {
+			nearByCities = nearByCityList.stream().collect(
+					Collectors.joining(","));
+		}
+		this.nearByCities = nearByCities;
+
+	}
+
+	public void setNearByCities(String nearByCities) {
+		this.nearByCities = nearByCities;
+		if (nearByCities != null) {
+			this.nearByCityList = Arrays.asList(nearByCities.split(","));
+		}
+	}
+
+	public void setByFlight(String byFlight) {
+		this.byFlight = byFlight;
+	}
+
+	public void setByTrain(String byTrain) {
+		this.byTrain = byTrain;
+	}
+
+	public void setByRoad(String byRoad) {
+		this.byRoad = byRoad;
 	}
 
 }

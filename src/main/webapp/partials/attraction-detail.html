@@ -24,6 +24,13 @@
 		</div>
 		<br/>
 		<div class="control-group">
+            <label class="control-label" for="inputCity">City:</label>
+            <div class="controls">
+                <select id="inputCity" ng-model="attraction.city" ng-options="item.id as item.name for item in cities"/>
+            </div>
+		</div>
+		<br>
+		<div class="control-group">
             <label class="control-label" for="inputState">State:</label>
             <div class="controls">
                 <input type="text" id="inputState" ng-model="attraction.state" />
@@ -54,24 +61,21 @@
 		<div class="control-group">
             <label class="control-label" for="inputHasEntryTicket">Entry Ticket ?:</label>
             <div class="controls">
-                <select id="inputHasEntryTicket" class="selectpicker" ng-model="attraction.hasEntryTicket">
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
-                </select>
+            	 <input type="checkbox" id="inputHasEntryTicket" ng-model="attraction.hasEntryTicket" />
             </div>
 		</div>
         <br>
 		<div class="control-group">
                 <label class="control-label" for="inputDescription">Description: </label>
                 <div class="controls">
-                    <textarea id="inputDescription" ng-model="attraction.aboutText"/><br>
+                    <textarea id="inputDescription" ng-model="attraction.aboutText" maxlength='255'/><br>
                     <span> {{255 - attraction.aboutText.length}} characters remaining</span>
                 </div>
         </div>
         <div class="control-group">
             <label class="control-label" for="inputTimeRequired">Time Required (in hours):</label>
             <div class="controls">
-                <input type="text" id="inputTimeRequired" ng-model="attraction.timeRequired" />
+                <input type="number" id="inputTimeRequired" ng-model="attraction.timeRequired"/>
             </div>
 		</div>
         <br>

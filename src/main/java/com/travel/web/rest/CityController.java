@@ -42,11 +42,13 @@ public class CityController {
 	@RequestMapping(value = "/form", method = RequestMethod.GET)
 	public City getCity(
 			final @RequestParam(value = "id", required = false) Integer id) {
+		City city = new City();
 		if (id != null) {
-			return cityRepository.findOne(id);
+			city = cityRepository.findOne(id);
+			// TODO: Dirty: We need to fix it
+			city.setNearByCities(city.getNearByCities());
 		}
-		// Used for CREATE
-		return new City();
+		return city;
 	}
 
 	@RequestMapping(value = "/form/{id}", method = RequestMethod.DELETE)
@@ -89,7 +91,14 @@ public class CityController {
 		}
 		returnValue.setAbouttext(city.getAbouttext());
 		returnValue.setCountry(city.getCountry());
-		returnValue.setHowtoreach(city.getHowtoreach());
+		returnValue.setByFlight(city.getByFlight());
+		returnValue.setByTrain(city.getByTrain());
+		returnValue.setByRoad(city.getByRoad());
+
+		if (city.getNearByCityList() != null) {
+			returnValue.setNearByCityList(city.getNearByCityList());
+		}
+
 		Collection<Tag> tags = returnValue.getTags();
 		tags.clear();
 		for (Tag tag : city.getTags()) {

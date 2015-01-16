@@ -5,7 +5,7 @@
 	<groupId>com.travel</groupId>
 	<artifactId>dataloader-service</artifactId>
 	<version>1.0.0</version>
-
+	<packaging>war</packaging>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -67,17 +67,13 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!-- 
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-		</dependency>
-		-->
+		<!-- <dependency> <groupId>com.h2database</groupId> <artifactId>h2</artifactId> 
+			</dependency> -->
 		<!-- MYSQL -->
-	    <dependency>
-	        <groupId>mysql</groupId>
-	        <artifactId>mysql-connector-java</artifactId>
-	    </dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>tomcat-jdbc</artifactId>

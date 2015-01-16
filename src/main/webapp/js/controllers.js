@@ -23,6 +23,10 @@ var app = angular.module('penut.controllers', []);
 	        $scope.addCity = function () {
 	            $location.path('/city-add');
 	        };
+	        
+	        $scope.addAttraction = function (cityId) {
+	        	$location.path('/attraction-add/'+cityId);
+	        };
 	
 	        $scope.cities = CityList.query();
 	    }]);
@@ -79,7 +83,9 @@ var app = angular.module('penut.controllers', []);
 	    					}
 	    				}
 	    			});
-	          	});          	 
+	          	});       
+	         // Near by cities
+    			$scope.autocomplete.cities = $scope.city.nearByCityList;
 	        }else{
 	        	$scope.city = {};  
 	        	$scope.allCityTags = TagRepo.query();
@@ -103,13 +109,14 @@ var app = angular.module('penut.controllers', []);
 		
 		
           // callback for ng-click 'updateCity':
-          $scope.save = function () {
-        	  var current = $scope.city;
-              CityForm.update(current,function(){
-            	  $location.path('/city-list');  
-              });
-              
-          };
+		$scope.save = function () {
+      	  var current = $scope.city;
+      	  /*$scope.city.nearByCityList = $scope.autocomplete.cities;*/
+            CityForm.update(current,function(){
+          	  $location.path('/city-list');  
+            });
+            
+		};
 
           // callback for ng-click 'cancel':
           $scope.cancel = function () {
@@ -120,16 +127,20 @@ var app = angular.module('penut.controllers', []);
       }]);
 
 
-	app.controller('AttractionFormCtrl',['$scope', '$routeParams', 'AttractionForm','fileUpload', '$location',
-      function ($scope, $routeParams, AttractionForm,fileUpload, $location) {
+	app.controller('AttractionFormCtrl',['$scope', '$routeParams','CityList', 'AttractionForm','fileUpload', '$location',
+      function ($scope, $routeParams, CityList, AttractionForm,fileUpload, $location) {
 		
 		if($routeParams.id) {
 			$scope.attraction=AttractionForm.show({id: $routeParams.id});
+		} else if($routeParams.cityId) {
+			$scope.attraction={};
+			$scope.attraction.city=$routeParams.cityId;
 		} else {
 			$routeParams.attraction={};
 		}
 		
 		$scope.save = function () {
+			$scope.replaceCityIdWithJSON();
 			AttractionForm.update($scope.attraction);
 			var file = $scope.files;
 			if($routeParams.id && file!=undefined) {
@@ -140,10 +151,21 @@ var app = angular.module('penut.controllers', []);
 			$location.path('/attraction-list');
 		}
 		
+		//Modify the method to use a better approach
+		$scope.replaceCityIdWithJSON= function() {
+			angular.forEach($scope.cities,function(city, index){
+				if(city.id==$scope.attraction.city) {
+					$scope.attraction.city=city;
+					return;
+				}
+			});
+		}
+		
 		$scope.cancel = function () {
             $location.path('/attraction-list');
         }; 
-		
+        
+        $scope.cities = CityList.query();
 	}]);
 	
 	app.controller('AttractionListCtrl',['$scope', '$routeParams', 'AttractionList','AttractionForm', '$location',

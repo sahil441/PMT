@@ -25,10 +25,37 @@
             </div>
         </div>
         
+        <legend></legend>
+        
+			<h4>Near By Cities!</h4>        
+		    <div class="row">
+		        <div class="col-xs-4 col-xs-offset-4 top-buffer">		        	
+		            <div auto-complete model="autocomplete.cities"></div>
+		        </div>
+		    </div>
+
+		
+        <legend></legend>
+        
         <div class="control-group">
-            <label class="control-label" for="howtoreach">How to reach?</label>
+        	<h4>How to reach?</h4>
+            <label class="control-label" for="byFlight">Flight</label>
             <div class="controls">
-                <textarea id="howtoreach" ng-model="city.howtoreach"/>
+                <textarea id="byFlight" ng-model="city.byFlight"/>
+            </div>
+        </div>
+
+		<div class="control-group">
+		            <label class="control-label" for="byTrain">Train</label>
+		            <div class="controls">
+		                <textarea id="byTrain" ng-model="city.byTrain"/>
+		            </div>
+		        </div>
+		
+		<div class="control-group">
+            <label class="control-label" for="byRoad">Car/Bus</label>
+            <div class="controls">
+                <textarea id="byRoad" ng-model="city.byRoad"/>
             </div>
         </div>
 

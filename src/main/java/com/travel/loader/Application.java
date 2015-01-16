@@ -9,6 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.WebApplicationInitializer;
 
 import com.travel.model.Tag;
 import com.travel.repositories.TagRepository;
@@ -18,7 +19,7 @@ import com.travel.repositories.TagRepository;
 @EnableScheduling
 @ComponentScan("com.travel")
 @PropertySource("classpath:application.properties")
-public class Application extends SpringBootServletInitializer {
+public class Application extends SpringBootServletInitializer implements WebApplicationInitializer {
 
 	@Override
 	protected SpringApplicationBuilder configure(
