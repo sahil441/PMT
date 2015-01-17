@@ -1,4 +1,4 @@
-angular.module('penut', [ 'penut.services', 'penut.controllers' ]).config(
+angular.module('penut', [ 'penut.services','penut.directives', 'penut.controllers']).config(
 		[ '$routeProvider', function($routeProvider) {
 			$routeProvider.when('/welcome', {
 				templateUrl : 'partials/welcome.html',

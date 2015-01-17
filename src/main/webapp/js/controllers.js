@@ -111,7 +111,7 @@ var app = angular.module('penut.controllers', []);
           // callback for ng-click 'updateCity':
 		$scope.save = function () {
       	  var current = $scope.city;
-      	  /*$scope.city.nearByCityList = $scope.autocomplete.cities;*/
+      	  $scope.city.nearByCityList = $scope.autocomplete.cities;
             CityForm.update(current,function(){
           	  $location.path('/city-list');  
             });
@@ -134,7 +134,7 @@ var app = angular.module('penut.controllers', []);
 			$scope.attraction=AttractionForm.show({id: $routeParams.id});
 		} else if($routeParams.cityId) {
 			$scope.attraction={};
-			$scope.attraction.city=$routeParams.cityId;
+			$scope.attraction.city=parseInt($routeParams.cityId);
 		} else {
 			$routeParams.attraction={};
 		}
@@ -142,6 +142,7 @@ var app = angular.module('penut.controllers', []);
 		$scope.save = function () {
 			$scope.replaceCityIdWithJSON();
 			AttractionForm.update($scope.attraction);
+			// upload file on saving attraction
 			var file = $scope.files;
 			if($routeParams.id && file!=undefined) {
             console.log('file is ' + JSON.stringify(file));
@@ -181,20 +182,4 @@ var app = angular.module('penut.controllers', []);
             $scope.attractions = AttractionList.query();
         };
         
-	}]);
-	
-	app.directive('fileModel', ['$parse', function ($parse) {
-	    return {
-	        restrict: 'A',
-	        link: function(scope, element, attrs) {
-	            var model = $parse(attrs.fileModel);
-	            var modelSetter = model.assign;
-	            
-	            element.bind('change', function(){
-	                scope.$apply(function(){
-	                    modelSetter(scope, element[0].files);
-	                });
-	            });
-	        }
-	    };
 	}]);

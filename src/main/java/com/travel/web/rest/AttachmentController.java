@@ -28,7 +28,6 @@ public class AttachmentController {
 	
 	@RequestMapping(value="/upload", method=RequestMethod.POST)
 	public void upload(@RequestParam("file") List<MultipartFile> files, HttpServletRequest request,HttpServletResponse response) throws IOException {
-		System.out.println("Inside the controller!!!!");
 		if(files==null || files.size()==0) {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return;
@@ -39,11 +38,9 @@ public class AttachmentController {
 			final String fileName=multipartFile.getOriginalFilename();
 			final long size=multipartFile.getSize();
 			final String contentType=multipartFile.getContentType();
-			final InputStream inputStream=multipartFile.getInputStream();
 			attachment.setFileName(fileName);
 			attachment.setContentType(contentType);
 			attachment.setSize(size);
-			Attachment save = attachmentRepo.save(attachment);
 			String filePath=System.getProperty("user.dir")+"\\dev\\data\\pics\\"+attachment.getId()+"_"+fileName;
 			File dest=new File(filePath);
 			multipartFile.transferTo(dest);
