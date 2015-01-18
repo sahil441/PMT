@@ -1,6 +1,8 @@
 package com.travel.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -11,6 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -84,6 +88,10 @@ public class Attraction implements Serializable {
 	
 	@Column(name = "popularity", nullable = false)
 	private Integer popularity;
+	
+	@ManyToMany
+	@JoinTable(name = "attraction_tags", joinColumns = @JoinColumn(name = "tag_id"), inverseJoinColumns = @JoinColumn(name = "attraction_id"))
+	private Collection<Tag> tags = new ArrayList<>();
 
 	public Integer getId() {
 		return id;
@@ -203,5 +211,16 @@ public class Attraction implements Serializable {
 
 	public void setPopularity(Integer popularity) {
 		this.popularity = popularity;
+	}
+	
+	public Collection<Tag> getTags() {
+		if (tags == null) {
+			tags = new ArrayList<Tag>();
+		}
+		return tags;
+	}
+	
+	public void setTags(Collection<Tag> tags) {
+		this.tags = tags;
 	}
 }

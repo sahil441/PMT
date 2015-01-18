@@ -131,7 +131,13 @@ var app = angular.module('penut.controllers', []);
       function ($scope, $routeParams, CityList, AttractionForm,fileUpload, $location) {
 		
 		if($routeParams.id) {
-			$scope.attraction=AttractionForm.show({id: $routeParams.id});
+			$scope.attraction=AttractionForm.show({id: $routeParams.id},function() {
+				$scope.data.tags=[];
+				$scope.attraction.city=$scope.attraction.city.id;
+				angular.forEach($scope.attraction.tags, function(tag, index) {
+					$scope.data.tags.push(tag.displayText);
+				});
+			});
 		} else if($routeParams.cityId) {
 			$scope.attraction={};
 			$scope.attraction.city=parseInt($routeParams.cityId);
@@ -140,6 +146,15 @@ var app = angular.module('penut.controllers', []);
 		}
 		
 		$scope.save = function () {
+			var allTagsObj=$("#tagsList").scope().tagsObj;
+			var selectedTags=$scope.data.tags;
+			$scope.attraction.tags=($scope.attraction.tags==undefined) ? [] : $scope.attraction.tags;
+			for(i=0;i<allTagsObj.length;i++) {
+				if(selectedTags.indexOf(allTagsObj[i].displayText)>-1) {
+					$scope.attraction.tags.push(allTagsObj[i]);
+				}
+			}
+			
 			$scope.replaceCityIdWithJSON();
 			AttractionForm.update($scope.attraction);
 			// upload file on saving attraction
@@ -180,6 +195,10 @@ var app = angular.module('penut.controllers', []);
         $scope.deleteAttraction = function (AttractionId) {
         	AttractionForm.delete({ id: AttractionId });
             $scope.attractions = AttractionList.query();
+        };
+        
+        $scope.addAttraction = function () {
+            $location.path('/attraction-add');
         };
         
 	}]);

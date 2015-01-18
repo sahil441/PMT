@@ -4,7 +4,7 @@
 var directives =angular.module('penut.directives', []);
 
 
-directives.directive('autoComplete',
+app.directive('autoComplete',
 		['$http', 
 		 function($http) {
 			return {
@@ -17,6 +17,7 @@ directives.directive('autoComplete',
 					scope.suggestions = [];
 					scope.selectedTags = [];
 					scope.selectedIndex = -1;
+					scope.tagsObj=[];
 
 					scope.removeTag = function(index) {
 						scope.selectedTags.splice(index, 1);
@@ -29,29 +30,44 @@ directives.directive('autoComplete',
 					//
 					scope.search = function() {
 						var  allCities =[];
-						$http.get('/json/static.json').success(function(countryArray) {										
-							for(i in countryArray){
-								var citiesInCountry = countryArray[i].city;
-								for( j in citiesInCountry){
-									allCities.push(citiesInCountry[j].value);
-								}
-							}
-							var filteredCities =  allCities.filter(
-									function(city){
-										var term = scope.searchText; 
-										return city.lastIndexOf(term, 0) === 0;
+						if(attrs.url=="") {
+							$http.get('/json/static.json').success(function(CityArray) {										
+								for(i in CityArray){
+									var citiesInCountry = CityArray[i].city;
+									for( j in citiesInCountry){
+										allCities.push(citiesInCountry[j].value);
 									}
-							);
+								}
+								var filteredCities =  allCities.filter(
+										function(city){
+											var term = scope.searchText; 
+											return city.lastIndexOf(term, 0) === 0;
+										}
+								);
 
-							if(filteredCities.indexOf(scope.searchText)===-1){
-								filteredCities.unshift(scope.searchText);
-							}
+								scope.suggestions = filteredCities;
+								scope.selectedIndex = -1;
+							});		
+						} else {
 
-							scope.suggestions = filteredCities;
-							scope.selectedIndex = -1;
-						});									
+							// System should send search text along with the url- Required JPA implementation for that
+							$http.get(attrs.url).success(function(data) {
+								var tagsArray=[];
+								scope.tagsObj=data;
+								for (i=0;i<data.length;i++) {
+									tagsArray.push(data[i].displayText);
+								}
+								var filteredTags = tagsArray.filter(
+										function(tag) {
+											var term=scope.searchText;
+											return tag.lastIndexOf(term, 0) === 0;
+										}
+								);
+								scope.suggestions = filteredTags;
+								scope.selectedIndex = -1;
+							});
+						}
 					}
-
 					scope.addToSelectedTags = function(index) {
 						if (scope.selectedTags
 								.indexOf(scope.suggestions[index]) === -1) {
@@ -89,7 +105,7 @@ directives.directive('autoComplete',
 			}
 		}]);
 
-directives.directive('Maxlength', ['$compile', '$log', function($compile, $log) {
+app.directive('Maxlength', ['$compile', '$log', function($compile, $log) {
 	return {
 		restrict: 'A',
 		require: 'ngModel',
@@ -112,7 +128,7 @@ directives.directive('Maxlength', ['$compile', '$log', function($compile, $log) 
 	};
 }]);
 
-directives.directive('fileModel', ['$parse', function ($parse) {
+app.directive('fileModel', ['$parse', function ($parse) {
 	return {
 		restrict: 'A',
 		link: function(scope, element, attrs) {
