@@ -9,7 +9,7 @@
 		<li ng-repeat="suggestion in suggestions" class="blockSpan"
 			ng-click="addToSelectedTags($index)"
 			ng-mouseover="$parent.selectedIndex=$index"
-			ng-class="{active : selectedIndex===$index}">{{suggestion}}</li>
+			ng-class="{active : selectedIndex===$index}">{{suggestion.displayText}}</li>
 	</ul>
 	</div>
 	</div>

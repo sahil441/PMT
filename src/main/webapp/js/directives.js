@@ -17,10 +17,11 @@ app.directive('autoComplete',
 					scope.suggestions = [];
 					scope.selectedTags = [];
 					scope.selectedIndex = -1;
-					scope.tagsObj=[];
+					scope.selectedTagsObj=[];
 
 					scope.removeTag = function(index) {
 						scope.selectedTags.splice(index, 1);
+						scope.selectedTagsObj.splice(index, 1);
 					}
 					//
 					// This can be replaced with a server call.
@@ -52,15 +53,11 @@ app.directive('autoComplete',
 
 							// System should send search text along with the url- Required JPA implementation for that
 							$http.get(attrs.url).success(function(data) {
-								var tagsArray=[];
 								scope.tagsObj=data;
-								for (i=0;i<data.length;i++) {
-									tagsArray.push(data[i].displayText);
-								}
-								var filteredTags = tagsArray.filter(
+								var filteredTags = data.filter(
 										function(tag) {
 											var term=scope.searchText;
-											return tag.lastIndexOf(term, 0) === 0;
+											return tag.displayText.lastIndexOf(term, 0) === 0;
 										}
 								);
 								scope.suggestions = filteredTags;
@@ -70,9 +67,10 @@ app.directive('autoComplete',
 					}
 					scope.addToSelectedTags = function(index) {
 						if (scope.selectedTags
-								.indexOf(scope.suggestions[index]) === -1) {
+								.indexOf(scope.suggestions[index].displayText) === -1) {
 							scope.selectedTags
-							.push(scope.suggestions[index]);
+							.push(scope.suggestions[index].displayText);
+							scope.selectedTagsObj.push(scope.suggestions[index]);
 							scope.searchText = '';
 							scope.suggestions = [];
 						}
@@ -97,7 +95,7 @@ app.directive('autoComplete',
 					scope.$watch('selectedIndex',
 							function(val) {
 						if (val !== -1) {
-							scope.searchText = scope.suggestions[scope.selectedIndex];
+							scope.searchText = scope.suggestions[scope.selectedIndex].displayText;
 						}
 					}
 					);

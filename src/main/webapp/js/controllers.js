@@ -132,10 +132,10 @@ var app = angular.module('penut.controllers', []);
 		
 		if($routeParams.id) {
 			$scope.attraction=AttractionForm.show({id: $routeParams.id},function() {
-				$scope.data.tags=[];
 				$scope.attraction.city=$scope.attraction.city.id;
-				angular.forEach($scope.attraction.tags, function(tag, index) {
+				angular.forEach($scope.attraction.tags, function(tag,index) {
 					$scope.data.tags.push(tag.displayText);
+					
 				});
 			});
 		} else if($routeParams.cityId) {
@@ -146,13 +146,10 @@ var app = angular.module('penut.controllers', []);
 		}
 		
 		$scope.save = function () {
-			var allTagsObj=$("#tagsList").scope().tagsObj;
-			var selectedTags=$scope.data.tags;
-			$scope.attraction.tags=($scope.attraction.tags==undefined) ? [] : $scope.attraction.tags;
-			for(i=0;i<allTagsObj.length;i++) {
-				if(selectedTags.indexOf(allTagsObj[i].displayText)>-1) {
-					$scope.attraction.tags.push(allTagsObj[i]);
-				}
+			if($("#tagsList").scope().selectedTagsObj.length!==0) {
+				angular.forEach($("#tagsList").scope().selectedTagsObj, function(tag, index) {
+					$scope.attraction.tags.push(tag);
+				});
 			}
 			
 			$scope.replaceCityIdWithJSON();
