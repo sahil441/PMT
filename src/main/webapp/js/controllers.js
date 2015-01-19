@@ -147,6 +147,7 @@ var app = angular.module('penut.controllers', []);
 		
 		$scope.save = function () {
 			if($("#tagsList").scope().selectedTagsObj.length!==0) {
+				$scope.attraction.tags= ($scope.attraction.tags==undefined) ? [] : $scope.attraction.tags;
 				angular.forEach($("#tagsList").scope().selectedTagsObj, function(tag, index) {
 					$scope.attraction.tags.push(tag);
 				});
