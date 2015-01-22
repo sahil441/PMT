@@ -86,7 +86,8 @@ app.controller('CityFormCtrl', ['$scope', '$filter','$routeParams', 'CityForm', 
 				});
 				// Near by cities
 				$scope.autocomplete.cities = $scope.city.nearByCityList;
-			});          	 
+			}); 
+			
 		}else{
 			$scope.city = {};  
 			$scope.allCityTags = TagRepo.query();
@@ -166,7 +167,9 @@ app.controller('AttractionFormCtrl',['$scope', '$routeParams','CityList', 'Attra
 			httpPost.success(function(response){
 				$("#attractionsImageThrobber").toggle();
 				if(response!=undefined) {
-					$scope.attraction.attachments=response;
+					angular.forEach(response, function(attachment, index) {
+						$scope.attraction.attachments.push(attachment);
+					});
 					AttractionForm.update($scope.attraction);
 				}
 			})

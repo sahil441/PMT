@@ -126,7 +126,18 @@ directives.directive('fileModel', [ '$parse', function($parse) {
 
 			element.bind('change', function() {
 				scope.$apply(function() {
-						modelSetter(scope, element[0].files);
+						if(scope.files==undefined || scope.files.length==0) {
+							modelSetter(scope, element[0].files);
+						} else {
+							var fileArray=[];
+							angular.forEach(scope.files, function(file1, key) {
+									fileArray.push(file1);
+							});
+							angular.forEach(element[0].files, function(file, index) {
+								fileArray.push(file);
+							});
+							modelSetter(scope, fileArray);
+						}
 				});
 			});
 		}
