@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -21,6 +22,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
+import org.hibernate.sql.Delete;
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -93,7 +95,7 @@ public class Attraction implements Serializable {
 	@JoinTable(name = "attraction_tags", joinColumns = @JoinColumn(name = "tag_id"), inverseJoinColumns = @JoinColumn(name = "attraction_id"))
 	private Collection<Tag> tags = new ArrayList<>();
 	
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="attraction_attachments", joinColumns=@JoinColumn(name="attraction_id",unique=false), inverseJoinColumns=@JoinColumn(name="attachment_id"))
 	private Collection<Attachment> attachments= new ArrayList<Attachment>();
 	

@@ -123,6 +123,11 @@
 				<td><a ng-click="deleteFile(file)"
 					class="btn btn-small btn-danger">Remove</a></td>
 			</tr>
+			<tr ng-repeat="attraction in attraction.attachments">
+				<td>{{ attraction.fileName }}</td>
+				<td><a ng-click=""
+					class="btn btn-small btn-danger disabled">Remove</a></td>
+			</tr>
 		</tbody>
 	</table>
         </div>

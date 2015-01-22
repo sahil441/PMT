@@ -1,5 +1,6 @@
 package com.travel.web.rest;
 
+import java.io.File;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -16,21 +17,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.travel.model.Attachment;
 import com.travel.model.Attraction;
 import com.travel.repositories.AttractionRepository;
 
 @RestController
 @RequestMapping("attraction")
 public class AttractionController {
-	
+
 	@Autowired
 	private AttractionRepository attractionRepository;
-	
+
 	@RequestMapping(value="/list", method=RequestMethod.GET)
 	public List<Attraction> getAttractions() {
 		return attractionRepository.findAll();
 	}
-	
+
 	@RequestMapping(value = "/form/", method = RequestMethod.GET)
 	public Attraction newAttraction(final @PathVariable Integer id) {
 		return new Attraction();
@@ -40,16 +42,25 @@ public class AttractionController {
 	public Attraction getAttraction(final @PathVariable Integer id) {
 		return attractionRepository.findOne(id);
 	}
-	
+
 	@RequestMapping(value = "/form/{id}", method = RequestMethod.POST)
 	public Attraction updateAttraction(final @PathVariable Integer id,
 			final @RequestBody @Valid Attraction attraction) {
-	/*	copyAttractionData(attraction,toAttraction);*/
+		/*	copyAttractionData(attraction,toAttraction);*/
 		return attractionRepository.save(attraction);
 	}
 
 	@RequestMapping(value = "/form/{id}", method = RequestMethod.DELETE)
 	public void removeAttraction(final @PathVariable Integer id) {
+		Attraction attraction = attractionRepository.findOne(id);
+		String filePath;
+		for(Attachment attachment: attraction.getAttachments()) {
+			filePath=System.getProperty("user.dir")+"\\dev\\data\\pics\\"+attachment.getId()+"_"+attachment.getFileName();
+			File file=new File(filePath);
+			if(file.exists()) {
+				file.delete();
+			}
+		}	
 		attractionRepository.delete(id);
 	}
 
@@ -76,6 +87,6 @@ public class AttractionController {
 			IllegalArgumentException e) throws Exception {
 		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 	}
-	
-	
+
+
 }
