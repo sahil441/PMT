@@ -129,33 +129,37 @@ app.controller('CityFormCtrl', ['$scope', '$filter','$routeParams', 'CityForm', 
 }]);
 
 
-app.controller('AttractionFormCtrl',['$scope', '$routeParams','CityList', 'AttractionForm','fileUpload', '$location',
-                                     function ($scope, $routeParams, CityList, AttractionForm,fileUpload, $location) {
+app.controller('AttractionFormCtrl',['$scope', '$routeParams','CityList', 'AttractionForm','fileUpload', '$location','AttractionTagRepo',
+                                     function ($scope, $routeParams, CityList, AttractionForm,fileUpload, $location, AttractionTagRepo) {
 
 	if($routeParams.id) {
+		//if attraction is already created
 		$scope.attraction=AttractionForm.show({id: $routeParams.id},function() {
 			$scope.attraction.city=$scope.attraction.city.id;
 			angular.forEach($scope.attraction.tags, function(tag,index) {
 				$scope.data.tags.push(tag.displayText);
 
 			});
+			$scope.autocomplete.attraction_tags= $scope.attraction.tagList;
 		});
 	} else if($routeParams.cityId) {
+		// create attraction for a particular city
 		$scope.attraction={};
 		$scope.attraction.city=parseInt($routeParams.cityId);
 		$scope.attraction.country=$routeParams.countryName;
 	} else {
 		$routeParams.attraction={};
 	}
+	
+	$scope.attractionTags=AttractionTagRepo.query(function() {
+		for( var tag in $scope.attractionTags){
+			
+		}
+	});
 
 	$scope.save = function () {
-		/*if($("#tagsList").scope().selectedTagsObj.length!==0) {
-				$scope.attraction.tags= ($scope.attraction.tags==undefined) ? [] : $scope.attraction.tags;
-				angular.forEach($("#tagsList").scope().selectedTagsObj, function(tag, index) {
-					$scope.attraction.tags.push(tag);
-				});
-
-			}*/
+		var tags=$scope.autocomplete.attraction_tags;
+		$scope.attraction.tagList=tags;
 		$scope.replaceCityIdWithJSON();
 		// upload file on saving attraction | Visible during attraction edit only
 		var file = $scope.files;

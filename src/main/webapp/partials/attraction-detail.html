@@ -96,12 +96,17 @@
                 <input type="number" id="inputPopularity" ng-model="attraction.popularity" />
             </div>
 		</div>
-		<br>
+		<hr style="border: none; height: 1px; color: #F0F0F0; background: #F0F0F0 ;" />
 		<div class="control-group">
 			<label class="control-label" for="inputTags">Tags: </label>
-        		<div auto-complete url="/tag/list" model="data.tags"></div>
+        		<div auto-complete url="json/attraction_tags.json" model="autocomplete.attraction_tags"></div>
         </div>
-        <br>
+        <hr style="border: none; height: 1px; color: #F0F0F0; background: #F0F0F0 ;" />
+        <div class="control-group">
+			<label class="control-label" for="inputTags">Must Do Things: </label>
+        		<div auto-complete url="json/attraction_mdt_tags.json" model="autocomplete.mdt_tags"></div>
+        </div>
+        <hr style="border: none; height: 1px; color: #F0F0F0; background: #F0F0F0 ;" />
 		<div class="control-group" ng-show="attraction.id">
 			<label class="control-label" for="inputAttractionImages">Images: </label>
         	<div class="controls" >

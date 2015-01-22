@@ -40,13 +40,27 @@ public class AttractionController {
 
 	@RequestMapping(value = "/form/{id}", method = RequestMethod.GET)
 	public Attraction getAttraction(final @PathVariable Integer id) {
-		return attractionRepository.findOne(id);
+		Attraction attraction = attractionRepository.findOne(id);
+		// To populate tagList as it is transient
+		if(attraction.getTags()!=null) {
+			attraction.setTags(attraction.getTags());
+		}
+		if(attraction.getMdtTags()!=null) {
+			attraction.setMdtTags(attraction.getMdtTags());
+		}
+		return attraction;
 	}
 
 	@RequestMapping(value = "/form/{id}", method = RequestMethod.POST)
 	public Attraction updateAttraction(final @PathVariable Integer id,
 			final @RequestBody @Valid Attraction attraction) {
-		/*	copyAttractionData(attraction,toAttraction);*/
+		// In Order to store values in tags as csv
+		if(attraction.getTagList()!=null) {
+			attraction.setTagList(attraction.getTagList());
+		}
+		if(attraction.getMdtTagList()!=null) {
+			attraction.setMdtTagList(attraction.getMdtTagList());
+		}
 		return attractionRepository.save(attraction);
 	}
 
@@ -73,6 +87,13 @@ public class AttractionController {
 		ResponseEntity<Attraction> rv;
 
 		try {
+			// In Order to store values in tags as csv
+			if(attraction.getTagList()!=null) {
+				attraction.setTagList(attraction.getTagList());
+			}
+			if(attraction.getMdtTagList()!=null) {
+				attraction.setMdtTagList(attraction.getMdtTagList());
+			}
 			this.attractionRepository.save(attraction);
 			rv = new ResponseEntity<>(attraction, HttpStatus.OK);
 		} catch (DataIntegrityViolationException e) {

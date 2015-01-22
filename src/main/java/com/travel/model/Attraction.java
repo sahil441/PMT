@@ -2,8 +2,11 @@ package com.travel.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,6 +22,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
@@ -91,14 +95,85 @@ public class Attraction implements Serializable {
 	@Column(name = "popularity", nullable = false)
 	private Integer popularity;
 	
-	@ManyToMany
-	@JoinTable(name = "attraction_tags", joinColumns = @JoinColumn(name = "tag_id"), inverseJoinColumns = @JoinColumn(name = "attraction_id"))
-	private Collection<Tag> tags = new ArrayList<>();
-	
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="attraction_attachments", joinColumns=@JoinColumn(name="attraction_id",unique=false), inverseJoinColumns=@JoinColumn(name="attachment_id"))
 	private Collection<Attachment> attachments= new ArrayList<Attachment>();
 	
+	@Transient
+	private List<String> tagList;
+	
+	@Transient
+	private List<String> mdtTagList;
+	
+	@Column(name="tags", length=255, nullable=true)
+	@Size(max=255)
+	@JsonIgnore
+	private String tags;
+	
+	@Column(name="mdtTags", length=255, nullable=true)
+	@Size(max=255)
+	@JsonIgnore
+	private String mdtTags;
+	
+	
+	public List<String> getTagList() {
+		if(tagList==null) {
+			tagList=new ArrayList<String>();
+		}
+		return tagList;
+	}
+
+	public void setTagList(List<String> tagList) {
+		this.tagList = tagList;
+		String tags = "";
+		if (tagList != null) {
+			tags = tagList.stream().collect(
+					Collectors.joining(","));
+		}
+		this.tags = tags;
+
+	}
+
+	public String getTags() {
+		return tags;
+	}
+
+	public void setTags(String tags) {
+		this.tags = tags;
+		if(tags!=null) {
+			this.tagList=Arrays.asList(tags.split(","));
+		}
+	}
+	
+	public List<String> getMdtTagList() {
+		if(mdtTagList==null) {
+			mdtTagList=new ArrayList<String>();
+		}
+		return mdtTagList;
+	}
+
+	public void setMdtTagList(List<String> mdtTagList) {
+		this.mdtTagList = mdtTagList;
+		String mdtTags = "";
+		if (mdtTagList != null) {
+			mdtTags = mdtTagList.stream().collect(
+					Collectors.joining(","));
+		}
+		this.mdtTags = mdtTags;
+
+	}
+
+	public String getMdtTags() {
+		return mdtTags;
+	}
+
+	public void setMdtTags(String mdtTags) {
+		this.mdtTags = mdtTags;
+		if(mdtTags!=null) {
+			this.mdtTagList=Arrays.asList(mdtTags.split(","));
+		}
+	}
+
 	public Collection<Attachment> getAttachments() {
 		return attachments;
 	}
@@ -229,16 +304,5 @@ public class Attraction implements Serializable {
 
 	public void setPopularity(Integer popularity) {
 		this.popularity = popularity;
-	}
-	
-	public Collection<Tag> getTags() {
-		if (tags == null) {
-			tags = new ArrayList<Tag>();
-		}
-		return tags;
-	}
-	
-	public void setTags(Collection<Tag> tags) {
-		this.tags = tags;
 	}
 }

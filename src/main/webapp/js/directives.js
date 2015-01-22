@@ -15,6 +15,7 @@ directives.directive('autoComplete',
 					scope.suggestions = [];
 					scope.selectedTags = [];
 					scope.selectedIndex = -1;
+					scope.autocompleteModel=attrs.model;
 
 					scope.removeTag = function(index) {
 						scope.selectedTags.splice(index, 1);
@@ -26,6 +27,7 @@ directives.directive('autoComplete',
 					// With' basis
 					//
 					scope.search = function() {
+						if(scope.autocompleteModel=="autocomplete.cities") {
 						var  allCities =[];
 						$http.get('json/static.json').success(function(countryArray) {										
 							for(i in countryArray){
@@ -47,7 +49,30 @@ directives.directive('autoComplete',
 
 							scope.suggestions = filteredCities;
 							scope.selectedIndex = -1;
-						});									
+						});			
+					  } else {
+						  var items=[];
+						  $http.get(attrs.url).success(function(tagArray) {
+								for(i in tagArray) {
+								items.push(tagArray[i].key);
+							 }
+						  
+						  var filteredTags= items.filter(
+								  function(tag) {
+									  var term = scope.searchText;
+									  return tag.lastIndexOf(term, 0) === 0;
+								  }
+						    );
+						  
+						  if(filteredTags.indexOf(scope.searchText)===-1){
+							  filteredTags.unshift(scope.searchText);
+							}
+						  
+						  scope.suggestions = filteredTags;
+						  scope.selectedIndex = -1;
+						  
+						  });
+					}
 					}
 
 					scope.addToSelectedTags = function(index) {
