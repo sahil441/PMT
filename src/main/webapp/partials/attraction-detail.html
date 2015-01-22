@@ -97,18 +97,35 @@
             </div>
 		</div>
 		<br>
+		<div class="control-group">
+			<label class="control-label" for="inputTags">Tags: </label>
+        		<div auto-complete url="/tag/list" model="data.tags"></div>
+        </div>
+        <br>
 		<div class="control-group" ng-show="attraction.id">
 			<label class="control-label" for="inputAttractionImages">Images: </label>
         	<div class="controls" >
         		<input type="file" id="inputAttractionImages" file-model="files" multiple />
         		<img id='attractionsImageThrobber' src='img/busy.gif' style='display:none'/>
         	</div>
+        	<br>
+        	<br>
+        	<table class="table table-striped table-condensed">
+			<thead>
+			<tr>
+				<th style="min-width: 80px;">Name</th>
+				<th style="min-width: 80px;"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="file in files">
+				<td>{{ file.name }}</td>
+				<td><a ng-click="deleteFile(file)"
+					class="btn btn-small btn-danger">Remove</a></td>
+			</tr>
+		</tbody>
+	</table>
         </div>
-        <div class="control-group">
-			<label class="control-label" for="inputTags">Tags: </label>
-        		<div auto-complete url="/tag/list" model="data.tags"></div>
-        </div>
-        <br>
         <div class="control-group">
             <div class="controls">
                 <a ng-click="cancel()" class="btn btn-small">Cancel</a>

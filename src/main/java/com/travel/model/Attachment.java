@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 
 @Entity
 @Table(name="attachments")
-@JsonAutoDetect(getterVisibility=Visibility.NONE,setterVisibility=Visibility.NONE)
+@JsonAutoDetect(fieldVisibility = Visibility.ANY,getterVisibility=Visibility.NONE,setterVisibility=Visibility.NONE)
 public class Attachment implements Serializable {
 		
 		@Id

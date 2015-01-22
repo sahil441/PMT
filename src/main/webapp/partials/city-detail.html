@@ -27,10 +27,13 @@
         
         <legend></legend>
         
-			<div class="control-group">
-				<label class="control-label" for="inputNearbyCities">Near By Cities :</label>       		        	
-		        <div auto-complete url="" model="autocomplete.cities">
+			<h4>Near By Cities!</h4>        
+		    <div class="row">
+		        <div class="col-xs-4 col-xs-offset-4 top-buffer">		        	
+		            <div auto-complete model="autocomplete.cities"></div>
+		        </div>
 		    </div>
+
 		
         <legend></legend>
         
@@ -60,8 +63,8 @@
 		<div class="control-group">
 			  <div ng-repeat="tag in allCityTags">				 
 				  <div  class="controls">
-				     <label class="control-label" for="{{tag.displayText}}">{{tag.displayText}} 
-				 	 	<input type="checkbox" name="{{tag.displayText}}" id="{{tag.id}}" ng-model="tag.checked" ng-change="selectTags()" />
+				     <label class="control-label" for="{{tag.value}}">{{tag.value}} 
+				 	 	<input type="checkbox" name="{{tag.value}}" id="{{tag.key}}" ng-model="tag.checked" ng-change="selectTags()" />
 				  	 </label>
 				  </div>
 			  </div>				

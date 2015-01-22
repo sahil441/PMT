@@ -34,15 +34,6 @@ public class Application extends SpringBootServletInitializer implements WebAppl
 				Application.class, args);
 		System.out.println("Startup Date: "
 				+ applicationContext.getStartupDate());
-		// Adding fixed data. DB INSERTS. This is working as we are dropping and
-		// creating db each time.
-		TagRepository tagRepository = applicationContext
-				.getBean(TagRepository.class);
-		tagRepository.save(new Tag("Adventure"));
-		tagRepository.save(new Tag("Hill Station"));
-		tagRepository.save(new Tag("Night Life"));
-		tagRepository.save(new Tag("Nature"));
-		tagRepository.flush();
 	}
 
 }

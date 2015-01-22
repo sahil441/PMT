@@ -23,7 +23,7 @@ services.factory('StaticRepo', function($resource){
 });
 
 services.factory('TagRepo', function($resource){
-	  return $resource('/tag/list', {}, {
+	  return $resource('json/tags.json', {}, {
 	      query: { method: 'GET', isArray: true }
 	  });
 });
@@ -52,7 +52,30 @@ services.factory('CityForm', function ($resource) {
     })
 });
 
-services.service('fileUpload', ['$http', function ($http) {
+services.factory('fileUpload', function($http) {
+    return {
+    	uploadFileToUrl: function (file, uploadUrl) {
+        	        var fd = new FormData();
+        	        for(i=0;i<file.length;i++) {
+        	        	fd.append('file', file[i]);
+        	        }
+        	        $("#attractionsImageThrobber").toggle();
+        	        return $http.post(uploadUrl, fd, {
+        	            transformRequest: angular.identity,
+        	            headers: {'Content-Type': undefined}
+        	        });
+        	        /*.success(function(response){
+        	        	$("#attractionsImageThrobber").toggle();
+        	        	return response;
+        	        })
+        	        .error(function(){
+        	        	$("#attractionsImageThrobber").toggle();
+        	        });*/
+        	}
+      }
+    });
+
+/*services.service('fileUpload', ['$http', function ($http) {
     this.uploadFileToUrl = function(file, uploadUrl){
         var fd = new FormData();
         for(i=0;i<file.length;i++) {
@@ -63,7 +86,7 @@ services.service('fileUpload', ['$http', function ($http) {
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
         })
-        .success(function(){
+        .success(function(response){
         	$("#attractionsImageThrobber").toggle();
         })
         .error(function(){
@@ -71,3 +94,4 @@ services.service('fileUpload', ['$http', function ($http) {
         });
     }
 }]);
+*/

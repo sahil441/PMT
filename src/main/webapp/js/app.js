@@ -16,7 +16,7 @@ angular.module('penut', [ 'penut.services','penut.directives', 'penut.controller
 				templateUrl : 'partials/city-detail.html',
 				controller : 'CityFormCtrl'
 			});
-			$routeProvider.when('/attraction-add/:cityId', {
+			$routeProvider.when('/attraction-add/cityId/:cityId/countryName/:countryName', {
 				templateUrl : 'partials/attraction-detail.html',
 				controller : 'AttractionFormCtrl'
 			});

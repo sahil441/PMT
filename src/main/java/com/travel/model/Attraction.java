@@ -92,6 +92,22 @@ public class Attraction implements Serializable {
 	@ManyToMany
 	@JoinTable(name = "attraction_tags", joinColumns = @JoinColumn(name = "tag_id"), inverseJoinColumns = @JoinColumn(name = "attraction_id"))
 	private Collection<Tag> tags = new ArrayList<>();
+	
+	@OneToMany
+	@JoinTable(name="attraction_attachments", joinColumns=@JoinColumn(name="attraction_id",unique=false), inverseJoinColumns=@JoinColumn(name="attachment_id"))
+	private Collection<Attachment> attachments= new ArrayList<Attachment>();
+	
+	public Collection<Attachment> getAttachments() {
+		return attachments;
+	}
+
+	public void setAttachments(Collection<Attachment> attachments) {
+		this.attachments = attachments;
+	}
+	
+	public void addAttachment(Attachment attachment) {
+		attachments.add(attachment);
+	}
 
 	public Integer getId() {
 		return id;

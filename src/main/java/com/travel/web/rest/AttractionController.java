@@ -48,24 +48,6 @@ public class AttractionController {
 		return attractionRepository.save(attraction);
 	}
 
-/*	private void copyAttractionData(Attraction attraction,
-			Attraction toAttraction) {
-		toAttraction.setAboutText(attraction.getAboutText());
-		toAttraction.setAddress(attraction.getAddress());
-		toAttraction.setAddress2(attraction.getAddress2());
-		toAttraction.setCity(attraction.getCity());
-		toAttraction.setCountry(attraction.getCountry());
-		toAttraction.setHasEntryTicket(attraction.isHasEntryTicket());
-		toAttraction.setName(attraction.getName());
-		toAttraction.setPhoneNumber(attraction.getPhoneNumber());
-		toAttraction.setPopularity(attraction.getPopularity());
-		toAttraction.setPostalCode(attraction.getPostalCode());
-		toAttraction.setPrefferedEndTiming(attraction.getPrefferedEndTiming());
-		toAttraction.setPrefferedStartTiming(attraction.getPrefferedStartTiming());
-		toAttraction.setState(attraction.getState());
-		toAttraction.setTimeRequired(attraction.getTimeRequired());
-	}*/
-
 	@RequestMapping(value = "/form/{id}", method = RequestMethod.DELETE)
 	public void removeAttraction(final @PathVariable Integer id) {
 		attractionRepository.delete(id);
