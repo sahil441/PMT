@@ -69,7 +69,36 @@
 				  </div>
 			  </div>				
 		</div>
-		        
+		<hr style="border: none; height: 1px; color: #F0F0F0; background: #F0F0F0 ;" />
+		<div class="control-group" ng-show="city.id">
+			<label class="control-label" for="inputCityImages">Images: </label>
+        	<div class="controls" >
+        		<input type="file" id="inputCityImages" file-model="files" multiple />
+        		<img id='cityImageThrobber' src='img/busy.gif' style='display:none'/>
+        	</div>
+        	<br>
+        	<hr style="border: none; height: 1px; color: #F0F0F0; background: #F0F0F0 ;" />
+        	<table class="table table-striped table-condensed">
+			<thead>
+			<tr>
+				<th style="min-width: 80px;">Image Name</th>
+				<th style="min-width: 80px;">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="file in files">
+				<td>{{ file.name }}</td>
+				<td><a ng-click="deleteFile(file)"
+					class="btn btn-small btn-danger">Remove</a></td>
+			</tr>
+			<tr ng-repeat="attachment in city.attachments">
+				<td>{{ attachment.fileName }}</td>
+				<td><a ng-click=""
+					class="btn btn-small btn-danger disabled">Remove</a></td>
+			</tr>
+		</tbody>
+	</table>
+        </div>       
         <div class="control-group">
             <div class="controls">
               	<!-- city -detail.html: -->

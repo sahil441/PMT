@@ -65,7 +65,7 @@ services.factory('fileUpload', function($http) {
 			for(i=0;i<file.length;i++) {
 				fd.append('file', file[i]);
 			}
-			$("#attractionsImageThrobber").toggle();
+			$("#throbber").toggle();
 			return $http.post(uploadUrl, fd, {
 				transformRequest: angular.identity,
 				headers: {'Content-Type': undefined}

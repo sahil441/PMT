@@ -98,7 +98,11 @@ public class CityController {
 		if (city.getNearByCityList() != null) {
 			returnValue.setNearByCityList(city.getNearByCityList());
 		}
-
+		
+		if(city.getAttachments()!=null && city.getAttachments().size()!=0) {
+			returnValue.setAttachments(city.getAttachments());
+		}
+		
 		Collection<Tag> tags = returnValue.getTags();
 		tags.clear();
 		for (Tag tag : city.getTags()) {

@@ -33,8 +33,8 @@ app.controller('CityListCtrl', ['$scope', 'CityList', 'CityForm', '$location',
 	$scope.cities = CityList.query();
 }]);
 
-app.controller('CityFormCtrl', ['$scope', '$filter','$routeParams', 'CityForm', '$location','StaticRepo','TagRepo',
-                                function ($scope, $filter, $routeParams, CityForm, $location,StaticRepo,TagRepo) {
+app.controller('CityFormCtrl', ['$scope', '$filter','$routeParams', 'CityForm','fileUpload', '$location','StaticRepo','TagRepo',
+                                function ($scope, $filter, $routeParams, CityForm,fileUpload, $location,StaticRepo,TagRepo) {
 
 	// Update city tag collection on selection.
 	$scope.selectTags = function () {
@@ -114,16 +114,46 @@ app.controller('CityFormCtrl', ['$scope', '$filter','$routeParams', 'CityForm', 
 	$scope.save = function () {
 		var current = $scope.city;
 		$scope.city.nearByCityList = $scope.autocomplete.cities;
-		CityForm.update(current,function(){
+		var file = $scope.files;
+		if($routeParams.id && file!=undefined) {
+			console.log('file is ' + JSON.stringify(file));
+			var uploadUrl = "/attachment/upload";
+			// this method should return list of attachments
+			var httpPost=fileUpload.uploadFileToUrl(file, uploadUrl);
+			httpPost.success(function(response){
+				$("#throbber").toggle();
+				if(response!=undefined) {
+					angular.forEach(response, function(attachment, index) {
+						$scope.city.attachments.push(attachment);
+					});
+					CityForm.update($scope.city);
+				}
+			})
+			.error(function(){
+				$("#throbber").toggle();
+				app.alert("Attachments upload error");
+			});
+		} else {
+			CityForm.update($scope.city);
+		}
 			$location.path('/city-list');  
-		});
-
 	};
 
 	// callback for ng-click 'cancel':
 	$scope.cancel = function () {
 		$location.path('/city-list');
-	};        
+	};      
+	
+	$scope.deleteFile= function(file) {
+		// TODO: this method should be changed to imporve the complexity
+		var filesArray = [];
+		angular.forEach($scope.files, function(file1, key) {
+			if(file1!=file) {
+				filesArray.push(file1);
+			}
+		});
+		$scope.files=filesArray;
+	}
 
 
 }]);
@@ -141,6 +171,7 @@ app.controller('AttractionFormCtrl',['$scope', '$routeParams','CityList', 'Attra
 
 			});
 			$scope.autocomplete.attraction_tags= $scope.attraction.tagList;
+			$scope.autocomplete.mdt_tags= $scope.attraction.mdtTagList;
 		});
 	} else if($routeParams.cityId) {
 		// create attraction for a particular city
@@ -159,7 +190,9 @@ app.controller('AttractionFormCtrl',['$scope', '$routeParams','CityList', 'Attra
 
 	$scope.save = function () {
 		var tags=$scope.autocomplete.attraction_tags;
+		var mdTtags=$scope.autocomplete.mdt_tags;
 		$scope.attraction.tagList=tags;
+		$scope.attraction.mdtTagList=mdTtags;
 		$scope.replaceCityIdWithJSON();
 		// upload file on saving attraction | Visible during attraction edit only
 		var file = $scope.files;
@@ -169,7 +202,7 @@ app.controller('AttractionFormCtrl',['$scope', '$routeParams','CityList', 'Attra
 			// this method should return list of attachments
 			var httpPost=fileUpload.uploadFileToUrl(file, uploadUrl);
 			httpPost.success(function(response){
-				$("#attractionsImageThrobber").toggle();
+				$("#throbber").toggle();
 				if(response!=undefined) {
 					angular.forEach(response, function(attachment, index) {
 						$scope.attraction.attachments.push(attachment);
@@ -178,7 +211,7 @@ app.controller('AttractionFormCtrl',['$scope', '$routeParams','CityList', 'Attra
 				}
 			})
 			.error(function(){
-				$("#attractionsImageThrobber").toggle();
+				$("#throbber").toggle();
 				app.alert("Attachments upload error");
 			});
 		} else {

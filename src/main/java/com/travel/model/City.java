@@ -89,6 +89,10 @@ public class City implements Serializable {
 	@NotBlank
 	@Size(max = 255)
 	private String byRoad;
+	
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="city_attachments", joinColumns=@JoinColumn(name="city_id",unique=false), inverseJoinColumns=@JoinColumn(name="attachment_id"))
+	private Collection<Attachment> attachments= new ArrayList<Attachment>();
 
 	public Integer getId() {
 		return id;
@@ -194,5 +198,16 @@ public class City implements Serializable {
 	public void setByRoad(String byRoad) {
 		this.byRoad = byRoad;
 	}
+	
+	public Collection<Attachment> getAttachments() {
+		return attachments;
+	}
 
+	public void setAttachments(Collection<Attachment> attachments) {
+		this.attachments = attachments;
+	}
+	
+	public void addAttachment(Attachment attachment) {
+		attachments.add(attachment);
+	}
 }
