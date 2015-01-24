@@ -87,7 +87,7 @@ public class PersistenceConfig {
 		final Map<String, String> properties = new HashMap<>();
 		properties.put(HIBERNATE_GENERATE_STATISTICS, "false");
 		if (environment.acceptsProfiles("dev")) {
-			properties.put(HIBERNATE_HBM2DDL_AUTO, "create");
+			properties.put(HIBERNATE_HBM2DDL_AUTO, "update");
 		}
 		final LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
 		emf.setPersistenceUnitName("com.travel.model_resourceLocale");

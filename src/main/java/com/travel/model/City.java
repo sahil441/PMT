@@ -59,10 +59,6 @@ public class City implements Serializable {
 	@Size(max = 255)
 	private String abouttext;
 
-	@ManyToMany
-	@JoinTable(name = "city_tags", joinColumns = @JoinColumn(name = "tag_id"), inverseJoinColumns = @JoinColumn(name = "city_id"))
-	private Collection<Tag> tags = new ArrayList<>();
-
 	@OneToMany(cascade = CascadeType.ALL)
 	@OrderBy("popularity asc")
 	private List<Attraction> attractions = new ArrayList<>();
@@ -93,6 +89,14 @@ public class City implements Serializable {
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="city_attachments", joinColumns=@JoinColumn(name="city_id",unique=false), inverseJoinColumns=@JoinColumn(name="attachment_id"))
 	private Collection<Attachment> attachments= new ArrayList<Attachment>();
+	
+	
+	@Column(name="tags", length=255, nullable=true)
+	@Size(max=255)
+	private String tags;
+	
+	@Transient
+	private List<String> tagList;
 
 	public Integer getId() {
 		return id;
@@ -108,13 +112,6 @@ public class City implements Serializable {
 
 	public String getAbouttext() {
 		return abouttext;
-	}
-
-	public Collection<Tag> getTags() {
-		if (tags == null) {
-			tags = new ArrayList<Tag>();
-		}
-		return tags;
 	}
 
 	public List<Attraction> getAttractions() {
@@ -143,6 +140,14 @@ public class City implements Serializable {
 	public String getByRoad() {
 		return byRoad;
 	}
+	
+	public List<String> getTagList() {
+		return tagList;
+	}
+	
+	public String getTags() {
+		return tags;
+	}
 
 	public void setId(Integer id) {
 		this.id = id;
@@ -158,10 +163,6 @@ public class City implements Serializable {
 
 	public void setAbouttext(String abouttext) {
 		this.abouttext = abouttext;
-	}
-
-	public void setTags(Collection<Tag> tags) {
-		this.tags = tags;
 	}
 
 	public void setAttractions(List<Attraction> attractions) {
@@ -184,6 +185,22 @@ public class City implements Serializable {
 		this.nearByCities = nearByCities;
 		if (nearByCities != null) {
 			this.nearByCityList = Arrays.asList(nearByCities.split(","));
+		}
+	}
+	
+	public void setTagList(List<String> tagList) {
+		this.tagList = tagList;
+		String tags="";
+		if(tagList!=null) {
+			tags=tagList.stream().collect(Collectors.joining(","));
+		}
+		this.tags=tags;
+	}
+	
+	public void setTags(String tags) {
+		this.tags = tags;
+		if(tags!=null) {
+			this.tagList = Arrays.asList(tags.split(","));
 		}
 	}
 

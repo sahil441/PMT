@@ -47,6 +47,7 @@ public class CityController {
 			city = cityRepository.findOne(id);
 			// TODO: Dirty: We need to fix it
 			city.setNearByCities(city.getNearByCities());
+			city.setTags(city.getTags());
 		}
 		return city;
 	}
@@ -103,10 +104,8 @@ public class CityController {
 			returnValue.setAttachments(city.getAttachments());
 		}
 		
-		Collection<Tag> tags = returnValue.getTags();
-		tags.clear();
-		for (Tag tag : city.getTags()) {
-			tags.add(tagRepository.findByDisplayText(tag.getDisplayText()));
+		if(city.getTagList()!=null) {
+			returnValue.setTagList(city.getTagList());
 		}
 		return returnValue;
 	}

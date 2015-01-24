@@ -86,6 +86,7 @@ app.controller('CityFormCtrl', ['$scope', '$filter','$routeParams', 'CityForm','
 				});
 				// Near by cities
 				$scope.autocomplete.cities = $scope.city.nearByCityList;
+				$scope.autocomplete.city_tags=$scope.city.tagList;
 			}); 
 			
 		}else{
@@ -114,6 +115,7 @@ app.controller('CityFormCtrl', ['$scope', '$filter','$routeParams', 'CityForm','
 	$scope.save = function () {
 		var current = $scope.city;
 		$scope.city.nearByCityList = $scope.autocomplete.cities;
+		$scope.city.tagList=$scope.autocomplete.city_tags;
 		var file = $scope.files;
 		if($routeParams.id && file!=undefined) {
 			console.log('file is ' + JSON.stringify(file));
