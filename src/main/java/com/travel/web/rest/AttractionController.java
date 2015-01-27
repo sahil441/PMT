@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,9 @@ public class AttractionController {
 
 	@Autowired
 	private AttractionRepository attractionRepository;
+	
+	@Autowired
+	private Environment env;
 
 	@RequestMapping(value="/list", method=RequestMethod.GET)
 	public List<Attraction> getAttractions() {
@@ -69,7 +73,7 @@ public class AttractionController {
 		Attraction attraction = attractionRepository.findOne(id);
 		String filePath;
 		for(Attachment attachment: attraction.getAttachments()) {
-			filePath=System.getProperty("user.dir")+"\\dev\\data\\pics\\"+attachment.getId()+"_"+attachment.getFileName();
+			filePath=env.getProperty("penut.pics.dir.path")+"\\"+attachment.getId()+"_"+attachment.getFileName();
 			File file=new File(filePath);
 			if(file.exists()) {
 				file.delete();

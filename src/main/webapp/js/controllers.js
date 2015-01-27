@@ -119,26 +119,27 @@ app.controller('CityFormCtrl', ['$scope', '$filter','$routeParams', 'CityForm','
 		var file = $scope.files;
 		if($routeParams.id && file!=undefined) {
 			console.log('file is ' + JSON.stringify(file));
-			var uploadUrl = "/attachment/upload";
+			var uploadUrl = "attachment/upload";
 			// this method should return list of attachments
 			var httpPost=fileUpload.uploadFileToUrl(file, uploadUrl);
 			httpPost.success(function(response){
-				$("#throbber").toggle();
 				if(response!=undefined) {
 					angular.forEach(response, function(attachment, index) {
 						$scope.city.attachments.push(attachment);
 					});
 					CityForm.update($scope.city);
+					$location.path('/city-list');
 				}
 			})
-			.error(function(){
-				$("#throbber").toggle();
-				app.alert("Attachments upload error");
+			.error(function(data, status, headers, config){
+				// needs to change it 
+				alert("Attachment cannot be uploaded as the combined size is greater than 20 M.B");
 			});
 		} else {
 			CityForm.update($scope.city);
+			$location.path('/city-list');
 		}
-			$location.path('/city-list');  
+			  
 	};
 
 	// callback for ng-click 'cancel':
@@ -200,11 +201,10 @@ app.controller('AttractionFormCtrl',['$scope', '$routeParams','CityList', 'Attra
 		var file = $scope.files;
 		if($routeParams.id && file!=undefined) {
 			console.log('file is ' + JSON.stringify(file));
-			var uploadUrl = "/attachment/upload";
+			var uploadUrl = "attachment/upload";
 			// this method should return list of attachments
 			var httpPost=fileUpload.uploadFileToUrl(file, uploadUrl);
 			httpPost.success(function(response){
-				$("#throbber").toggle();
 				if(response!=undefined) {
 					angular.forEach(response, function(attachment, index) {
 						$scope.attraction.attachments.push(attachment);
@@ -213,8 +213,7 @@ app.controller('AttractionFormCtrl',['$scope', '$routeParams','CityList', 'Attra
 				}
 			})
 			.error(function(){
-				$("#throbber").toggle();
-				app.alert("Attachments upload error");
+				alert("Attachment cannot be uploaded as the combined size is greater than 20 M.B");
 			});
 		} else {
 			AttractionForm.update($scope.attraction);

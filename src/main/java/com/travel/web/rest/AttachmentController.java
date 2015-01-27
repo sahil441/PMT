@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +32,9 @@ public class AttachmentController {
 	
 	@Autowired
 	private AttachmentRepository attachmentRepo;
+	
+	@Autowired
+	private Environment env;
 	
 	@RequestMapping(value="/upload", method=RequestMethod.POST)
 	@ResponseBody
@@ -58,7 +62,7 @@ public class AttachmentController {
 			
 			json.add(map);
 			
-			String filePath=System.getProperty("user.dir")+"\\dev\\data\\pics\\"+attachment.getId()+"_"+fileName;
+			String filePath=env.getProperty("penut.pics.dir.path")+"\\"+attachment.getId()+"_"+fileName;
 			File dest=new File(filePath);
 			multipartFile.transferTo(dest);
 		}	

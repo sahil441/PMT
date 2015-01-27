@@ -19,7 +19,7 @@ import com.travel.repositories.TagRepository;
 @EnableScheduling
 @ComponentScan("com.travel")
 @PropertySource("classpath:application.properties")
-public class Application extends SpringBootServletInitializer implements WebApplicationInitializer {
+public class Application extends SpringBootServletInitializer {
 
 	@Override
 	protected SpringApplicationBuilder configure(

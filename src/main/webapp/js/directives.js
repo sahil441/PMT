@@ -150,19 +150,30 @@ directives.directive('fileModel', [ '$parse', function($parse) {
 			var modelSetter = model.assign;
 
 			element.bind('change', function() {
-				scope.$apply(function() {
-						if(scope.files==undefined || scope.files.length==0) {
-							modelSetter(scope, element[0].files);
-						} else {
+				scope.$apply(function() {						
 							var fileArray=[];
 							angular.forEach(scope.files, function(file1, key) {
 									fileArray.push(file1);
 							});
+							var rejectedFiles="";
 							angular.forEach(element[0].files, function(file, index) {
-								fileArray.push(file);
+								if(file.size > 5242880) {
+									if(rejectedFiles=="") {
+										rejectedFiles+= file.name;
+									} else {
+										rejectedFiles+=", " + file.name;
+									}
+								} else {
+									fileArray.push(file);
+								}
 							});
-							modelSetter(scope, fileArray);
-						}
+							if(rejectedFiles!="") {
+								alert(rejectedFiles + "- cannot be uploaded ( as for each size > 5 M.B)");
+								modelSetter(scope, fileArray);
+								return;
+							} else {
+								modelSetter(scope, fileArray);
+							}
 				});
 			});
 		}

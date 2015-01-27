@@ -5,19 +5,19 @@
 var services = angular.module('penut.services', ['ngResource']);
 
 services.factory('Welcome', function ($resource) {
-	return $resource('/welcome/msg', {}, {
+	return $resource('welcome/msg', {}, {
 		query: { method: 'GET' }
 	});
 });
 
 services.factory('CityList', function ($resource) {
-	return $resource('/city/list', {}, {
+	return $resource('city/list', {}, {
 		query: { method: 'GET', isArray: true }
 	});
 });
 
 services.factory('StaticRepo', function($resource){
-	return $resource('/json/static.json', {}, {
+	return $resource('json/static.json', {}, {
 		query: { method: 'GET', isArray: true }
 	});
 });
@@ -35,13 +35,13 @@ services.factory('AttractionTagRepo', function($resource){
 });
 
 services.factory('AttractionList', function ($resource) {
-	return $resource('/attraction/list', {}, {
+	return $resource('attraction/list', {}, {
 		query: { method: 'GET', isArray: true },
 	})
 });
 
 services.factory('AttractionForm', function($resource) {
-	return $resource('/attraction/form/:id', {}, {
+	return $resource('attraction/form/:id', {}, {
 		show: { method: 'GET', params: {id: '@id'} },
 		create: { method: 'POST' },
 		update: { method: 'POST', params: {id: '@id'} },
@@ -50,7 +50,7 @@ services.factory('AttractionForm', function($resource) {
 });
 
 services.factory('CityForm', function ($resource) {
-	return $resource('/city/form/', {}, {
+	return $resource('city/form/', {}, {
 		show: { method: 'GET' ,params: {id: '@id'}},
 		create: { method: 'POST' },
 		update: { method: 'POST',  },

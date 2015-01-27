@@ -59,7 +59,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
 	@Bean
 	public MultipartConfigElement multipartConfigElement() {
-		return new MultipartConfigElement("", 5 * 1024 * 1024, 5 * 1024 * 1024,
+		// Max file Size is set to 5 M.B and max request size is set to 20 M.B
+		return new MultipartConfigElement("", 5 * 1024 * 1024, 20 * 1024 * 1024,
 				1024 * 1024);
 	}
 
