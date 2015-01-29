@@ -92,9 +92,12 @@ public class CityController {
 		}
 		returnValue.setAbouttext(city.getAbouttext());
 		returnValue.setCountry(city.getCountry());
-		returnValue.setByFlight(city.getByFlight());
-		returnValue.setByTrain(city.getByTrain());
-		returnValue.setByRoad(city.getByRoad());
+		returnValue.setClosestAirport(city.getClosestAirport());
+		returnValue.setDistanceFromAirport(city.getDistanceFromAirport());
+		returnValue.setClosestRailwayStation(city.getClosestRailwayStation());
+		returnValue.setDistanceFromRailwayStation(city.getDistanceFromRailwayStation());
+		returnValue.setClosestBusStand(city.getClosestBusStand());
+		returnValue.setDistanceFromBusStand(city.getDistanceFromBusStand());
 
 		if (city.getNearByCityList() != null) {
 			returnValue.setNearByCityList(city.getNearByCityList());

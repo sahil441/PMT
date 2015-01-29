@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +25,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.travel.model.Attachment;
+import com.travel.model.City;
 import com.travel.repositories.AttachmentRepository;
+import com.travel.repositories.AttractionRepository;
+import com.travel.repositories.CityRepository;
 
 @RestController
 @RequestMapping("attachment")
@@ -35,6 +39,12 @@ public class AttachmentController {
 	
 	@Autowired
 	private Environment env;
+	
+	@Autowired
+	private CityRepository cityRepo;
+	
+	@Autowired
+	private AttractionRepository attractionRepo;
 	
 	@RequestMapping(value="/upload", method=RequestMethod.POST)
 	@ResponseBody
@@ -67,5 +77,32 @@ public class AttachmentController {
 			multipartFile.transferTo(dest);
 		}	
 		return json;
+	}
+	
+	@RequestMapping(value="/delete/{id}/entity/{entityType}/entityId/{eid}", method=RequestMethod.GET)
+	public void deleteAttachment(@PathVariable("id") Integer id, @PathVariable("entityType") String entityType,@PathVariable("eid") Integer eid) {
+		// TODO: Write something generic.This is a dirty way.
+		String attachmentName="";
+		if(entityType.equalsIgnoreCase("city")) { 
+			City city=cityRepo.findOne(eid);
+			Collection<Attachment> attachments=city.getAttachments();
+			Iterator<Attachment> iterator = attachments.iterator();
+			Attachment attachment=null;
+			while(iterator.hasNext()) {
+				if((attachment=iterator.next()).getId()==id) {
+					attachmentName=attachment.getFileName();
+					attachments.remove(attachment);
+					break;
+				}
+			}
+			
+		} else if(entityType.equalsIgnoreCase("attraction")) {
+			
+		}
+		String filePath=env.getProperty("penut.pics.dir.path")+"\\"+id+"_"+attachmentName;
+		File file=new File(filePath);
+		if(file.exists()) {
+			file.delete();
+		}
 	}
 }

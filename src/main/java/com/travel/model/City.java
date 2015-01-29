@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
@@ -54,9 +55,10 @@ public class City implements Serializable {
 	@Size(max = 80)
 	private String country;
 
-	@Column(name = "abouttext", length = 255, nullable = false)
+	@Column(name = "abouttext", nullable = false)
 	@NotBlank
-	@Size(max = 255)
+	@Size(max = 500)
+	@Lob
 	private String abouttext;
 
 	@OneToMany(cascade = CascadeType.ALL)
@@ -71,20 +73,29 @@ public class City implements Serializable {
 	private String nearByCities;
 
 	// Connectivity
-	@Column(name = "byFlight", length = 255, nullable = true)
+	@Column(name = "closestAirport", length = 255, nullable = true)
 	@NotBlank
 	@Size(max = 255)
-	private String byFlight;
+	private String closestAirport;
+	
+	@Column(name = "distanceFromAirport", nullable = true)
+	private float distanceFromAirport;
 
-	@Column(name = "byTrain", length = 255, nullable = true)
+	@Column(name = "closestRailwayStation", length = 255, nullable = true)
 	@NotBlank
 	@Size(max = 255)
-	private String byTrain;
+	private String closestRailwayStation;
+	
+	@Column(name = "distanceFromRailwayStation", nullable = true)
+	private float distanceFromRailwayStation;
 
-	@Column(name = "byRoad", length = 255, nullable = true)
+	@Column(name = "closestBusStand", length = 255, nullable = true)
 	@NotBlank
 	@Size(max = 255)
-	private String byRoad;
+	private String closestBusStand;
+	
+	@Column(name = "distanceFromBusStand", nullable = true)
+	private float distanceFromBusStand;
 	
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="city_attachments", joinColumns=@JoinColumn(name="city_id",unique=false), inverseJoinColumns=@JoinColumn(name="attachment_id"))
@@ -127,18 +138,6 @@ public class City implements Serializable {
 
 	public String getNearByCities() {
 		return nearByCities;
-	}
-
-	public String getByFlight() {
-		return byFlight;
-	}
-
-	public String getByTrain() {
-		return byTrain;
-	}
-
-	public String getByRoad() {
-		return byRoad;
 	}
 	
 	public List<String> getTagList() {
@@ -203,19 +202,55 @@ public class City implements Serializable {
 			this.tagList = Arrays.asList(tags.split(","));
 		}
 	}
-
-	public void setByFlight(String byFlight) {
-		this.byFlight = byFlight;
-	}
-
-	public void setByTrain(String byTrain) {
-		this.byTrain = byTrain;
-	}
-
-	public void setByRoad(String byRoad) {
-		this.byRoad = byRoad;
-	}
 	
+	public String getClosestAirport() {
+		return closestAirport;
+	}
+
+	public void setClosestAirport(String closestAirport) {
+		this.closestAirport = closestAirport;
+	}
+
+	public float getDistanceFromAirport() {
+		return distanceFromAirport;
+	}
+
+	public void setDistanceFromAirport(float distanceFromAirport) {
+		this.distanceFromAirport = distanceFromAirport;
+	}
+
+	public String getClosestRailwayStation() {
+		return closestRailwayStation;
+	}
+
+	public void setClosestRailwayStation(String closestRailwayStation) {
+		this.closestRailwayStation = closestRailwayStation;
+	}
+
+	public float getDistanceFromRailwayStation() {
+		return distanceFromRailwayStation;
+	}
+
+	public void setDistanceFromRailwayStation(float distanceFromRailwayStation) {
+		this.distanceFromRailwayStation = distanceFromRailwayStation;
+	}
+
+	public String getClosestBusStand() {
+		return closestBusStand;
+	}
+
+	public void setClosestBusStand(String closestBusStand) {
+		this.closestBusStand = closestBusStand;
+	}
+
+	public float getDistanceFromBusStand() {
+		return distanceFromBusStand;
+	}
+
+	public void setDistanceFromBusStand(float distanceFromBusStand) {
+		this.distanceFromBusStand = distanceFromBusStand;
+	}
+
 	public Collection<Attachment> getAttachments() {
 		return attachments;
 	}

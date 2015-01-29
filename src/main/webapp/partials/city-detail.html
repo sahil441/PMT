@@ -1,105 +1,152 @@
 <div class="container">
-    <h2>City Details!</h2>
+	<h2>City Details!</h2>
 
-    <form novalidate="novalidate" class="form-horizontal">
-    	
-    	<input type="hidden" name="id" value="{{city.id}}"/>
-        <div class="control-group">
-            <label class="control-label" for="inputCountryText">Country:</label>
-            <div class="controls">
-             	<select ng-options="countryName as countryName for countryName in allCountries" ng-model="city.country" ng-change="refreshCities()"/>
-            </div>
-        </div>
-        
-        <div class="control-group">        	
-            <label class="control-label" for="inputCityName">Select City:</label>
-            <div class="controls">
-            	<select ng-options="item.value as item.key for item in citiesInCountry" ng-model="city.name"/>           
-            </div>
-        </div>
-        
-        <div class="control-group">
-            <label class="control-label" for="inputAboutText">About:</label>
-            <div class="controls">
-                <textarea id="inputAboutText" ng-model="city.abouttext"/>
-            </div>
-        </div>
-        
-        <legend></legend>
-        
-			<h4>Near By Cities!</h4>        
-		    <div class="row">
-		        <div class="col-xs-4 col-xs-offset-4 top-buffer">		        	
-		            <div auto-complete model="autocomplete.cities"></div>
-		        </div>
-		    </div>
+	<form novalidate="novalidate" class="form-horizontal">
 
-		
-        <legend></legend>
-        
-        <div class="control-group">
-        	<h4>How to reach?</h4>
-            <label class="control-label" for="byFlight">Flight</label>
-            <div class="controls">
-                <textarea id="byFlight" ng-model="city.byFlight"/>
-            </div>
-        </div>
+		<input type="hidden" name="id" value="{{city.id}}" />
+		<div class="control-group">
+			<label class="control-label" for="inputCountryText">Country:</label>
+			<div class="controls">
+				<select
+					ng-options="countryName as countryName for countryName in allCountries"
+					ng-model="city.country" ng-change="refreshCities()" />
+			</div>
+		</div>
 
 		<div class="control-group">
-		            <label class="control-label" for="byTrain">Train</label>
-		            <div class="controls">
-		                <textarea id="byTrain" ng-model="city.byTrain"/>
-		            </div>
-		        </div>
-		
-		<div class="control-group">
-            <label class="control-label" for="byRoad">Car/Bus</label>
-            <div class="controls">
-                <textarea id="byRoad" ng-model="city.byRoad"/>
-            </div>
-        </div>
+			<label class="control-label" for="inputCityName">Select City:</label>
+			<div class="controls">
+				<select
+					ng-options="item.value as item.key for item in citiesInCountry"
+					ng-model="city.name" />
+			</div>
+		</div>
 
+		<div class="control-group">
+			<label class="control-label" for="inputAboutText">About:</label>
+			<div class="controls">
+				<textarea id="inputAboutText" ng-model="city.abouttext"
+					maxlength='500' />
+				<span> {{500 - city.abouttext.length}} characters remaining</span>
+			</div>
+		</div>
+
+		<legend></legend>
+
+		<h4>Near By Cities!</h4>
+		<div class="row">
+			<div class="col-xs-4 col-xs-offset-4 top-buffer">
+				<div auto-complete model="autocomplete.cities"></div>
+			</div>
+		</div>
+
+
+		<legend>How to reach ?</legend>
+
+		<div class="control-group">
+			&nbsp <label for="flight">Flight <input type="radio"
+				id="flight" name="travelMode" value="flight" ng-model="travelMode" checked/>
+			</label> &nbsp <label for="train">Train <input type="radio"
+				id="train" name="travelMode" value="train" ng-model="travelMode" />
+			</label> &nbsp <label for="bus">Bus <input type="radio" id="bus"
+				name="travelMode" value="bus" ng-model="travelMode" />
+			</label>
+
+		</div>
+		<div class="content-group" ng-show="travelMode=='flight'">
+			<label class="control-label" for="inputClosestAirport">Closest
+				Airport: </label>
+			<div class="controls">
+				<textarea id="inputClosestAirport" ng-model="city.closestAirport"
+					maxlength='255' />
+				<br> <span> {{255 - city.closestAirport.length}}
+					characters remaining</span>
+			</div>
+			<br> <label class="control-label" for="inputDistanceFromAirport">Distance
+				from Airport (in kms): </label>
+			<div class="controls">
+				<input type="number" id="inputDistanceFromAirport"
+					ng-model="city.distanceFromAirport" />
+			</div>
+		</div>
+		<div class="content-group" ng-show="travelMode=='train'">
+			<label class="control-label" for="inputClosestRailwayStation">Closest
+				Railway Station: </label>
+			<div class="controls">
+				<textarea id="inputClosestRailwayStation"
+					ng-model="city.closestRailwayStation" maxlength='255' />
+				<br> <span> {{255 - city.closestRailwayStation}}
+					characters remaining</span>
+			</div>
+			<br> <label class="control-label"
+				for="inputDistanceFromRailwayStation">Distance from Railway
+				Station (in kms): </label>
+			<div class="controls">
+				<input type="number" id="inputDistanceFromRailwayStation"
+					ng-model="city.distanceFromRailwayStation" />
+			</div>
+		</div>
+		<div class="content-group" ng-show="travelMode=='bus'">
+			<label class="control-label" for="inputClosestBusStand">Closest
+				Bus Stand: </label>
+			<div class="controls">
+				<textarea id="inputClosestBusStand" ng-model="city.closestBusStand"
+					maxlength='255' />
+				<br> <span> {{255 - city.closestBusStand.length}}
+					characters remaining</span>
+			</div>
+			<br> <label class="control-label"
+				for="inputDistanceFromBusStand">Distance from Bus Stand (in
+				kms): </label>
+			<div class="controls">
+				<input type="number" id="inputDistanceFromBusStand"
+					ng-model="city.distanceFromBusStand" />
+			</div>
+		</div>
+		<br>
 		<legend>Select tags!</legend>
 		<div class="control-group">
 			<label class="control-label" for="inputTags">Tags: </label>
-        		<div auto-complete url="json/tags.json" model="autocomplete.city_tags"></div>
-        </div>
-		<hr style="border: none; height: 1px; color: #F0F0F0; background: #F0F0F0 ;" />
+			<div auto-complete url="json/tags.json"
+				model="autocomplete.city_tags"></div>
+		</div>
+		<hr
+			style="border: none; height: 1px; color: #F0F0F0; background: #F0F0F0;" />
 		<div class="control-group" ng-show="city.id">
 			<label class="control-label" for="inputCityImages">Images: </label>
-        	<div class="controls" >
-        		<input type="file" id="inputCityImages" file-model="files" multiple />
-        		<img id='cityImageThrobber' src='img/busy.gif' style='display:none'/>
-        	</div>
-        	<br>
-        	<hr style="border: none; height: 1px; color: #F0F0F0; background: #F0F0F0 ;" />
-        	<table class="table table-striped table-condensed">
-			<thead>
-			<tr>
-				<th style="min-width: 80px;">Image Name</th>
-				<th style="min-width: 80px;">Action</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr ng-repeat="file in files">
-				<td>{{ file.name }}</td>
-				<td><a ng-click="deleteFile(file)"
-					class="btn btn-small btn-danger">Remove</a></td>
-			</tr>
-			<tr ng-repeat="attachment in city.attachments">
-				<td>{{ attachment.fileName }}</td>
-				<td><a ng-click=""
-					class="btn btn-small btn-danger disabled">Remove</a></td>
-			</tr>
-		</tbody>
-	</table>
-        </div>       
-        <div class="control-group">
-            <div class="controls">
-              	<!-- city -detail.html: -->
-                <a ng-click="cancel()" class="btn btn-small">Cancel</a>                
-                <a ng-click="save()" class="btn btn-small btn-primary">Save</a>              
-            </div>
-        </div>
-    </form>
+			<div class="controls">
+				<input type="file" id="inputCityImages" file-model="files" multiple />
+				<img id='cityImageThrobber' src='img/busy.gif' style='display: none' />
+			</div>
+			<br>
+			<hr
+				style="border: none; height: 1px; color: #F0F0F0; background: #F0F0F0;" />
+			<table class="table table-striped table-condensed">
+				<thead>
+					<tr>
+						<th style="min-width: 80px;">Image Name</th>
+						<th style="min-width: 80px;">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="file in files">
+						<td>{{ file.name }}</td>
+						<td><a ng-click="deleteFile(file)"
+							class="btn btn-small btn-danger">Remove</a></td>
+					</tr>
+					<tr ng-repeat="attachment in city.attachments">
+						<td>{{ attachment.fileName }}</td>
+						<td><a ng-click="" class="btn btn-small btn-danger disabled">Remove</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="control-group">
+			<div class="controls">
+				<!-- city -detail.html: -->
+				<a ng-click="cancel()" class="btn btn-small">Cancel</a> <a
+					ng-click="save()" class="btn btn-small btn-primary">Save</a>
+			</div>
+		</div>
+	</form>
 </div>

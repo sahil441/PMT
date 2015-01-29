@@ -58,6 +58,7 @@
             </div>
 		</div>
         <br>
+        <legend></legend>
 		<div class="control-group">
             <label class="control-label" for="inputHasEntryTicket">Entry Ticket ?:</label>
             <div class="controls">
@@ -65,17 +66,30 @@
             </div>
 		</div>
         <br>
+        <div class="control-group" ng-show="attraction.hasEntryTicket==true">
+            <label class="control-label" for="inputTicketPrice">Entry ticket price (in Rs):</label>
+            <div class="controls">
+            	 <input type="number" id="inputTicketPrice" ng-model="attraction.ticketPrice" />
+            </div>
+            <br>
+            <label class="control-label" for="inputTicketAdditionalComments">Additional Comments:</label>
+            <div class="controls">
+            	 <textArea id="inputTicketAdditionalComments" ng-model="attraction.additionalCommentsOnTicket" maxlength='255' />
+            	  <br><span> {{255 - attraction.aboutText.length}} characters remaining</span>
+            </div>
+		</div>
+		<legend></legend>
 		<div class="control-group">
                 <label class="control-label" for="inputDescription">Description: </label>
                 <div class="controls">
-                    <textarea id="inputDescription" ng-model="attraction.aboutText" maxlength='255'/><br>
-                    <span> {{255 - attraction.aboutText.length}} characters remaining</span>
+                    <textarea id="inputDescription" ng-model="attraction.aboutText" maxlength='500'/><br>
+                    <span> {{500 - attraction.aboutText.length}} characters remaining</span>
                 </div>
         </div>
         <div class="control-group">
             <label class="control-label" for="inputTimeRequired">Time Required (in hours):</label>
             <div class="controls">
-                <input type="number" id="inputTimeRequired" ng-model="attraction.timeRequired"/>
+                <select ng-options="time as time for time in timeRequired" ng-model="attraction.timeRequired"/>
             </div>
 		</div>
         <br>
@@ -128,10 +142,10 @@
 				<td><a ng-click="deleteFile(file)"
 					class="btn btn-small btn-danger">Remove</a></td>
 			</tr>
-			<tr ng-repeat="attraction in attraction.attachments">
-				<td>{{ attraction.fileName }}</td>
-				<td><a ng-click=""
-					class="btn btn-small btn-danger disabled">Remove</a></td>
+			<tr ng-repeat="attachment in attraction.attachments">
+				<td>{{ attachment.fileName }}</td>
+				<td><a ng-click="deletedSavedAttachments(attachment.id)"
+					class="btn btn-small btn-danger">Remove</a></td>
 			</tr>
 		</tbody>
 	</table>

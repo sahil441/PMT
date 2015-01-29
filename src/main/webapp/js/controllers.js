@@ -185,6 +185,12 @@ app.controller('AttractionFormCtrl',['$scope', '$routeParams','CityList', 'Attra
 		$routeParams.attraction={};
 	}
 	
+	var timeRequired =[];
+	for (i=1;i<=24;i++) {
+		timeRequired.push(i);
+	}
+	$scope.timeRequired=timeRequired;
+	
 	$scope.attractionTags=AttractionTagRepo.query(function() {
 		for( var tag in $scope.attractionTags){
 			
@@ -231,6 +237,10 @@ app.controller('AttractionFormCtrl',['$scope', '$routeParams','CityList', 'Attra
 			}
 		});
 		$scope.files=filesArray;
+	}
+	
+	$scope.deletedSavedAttachments = function (attachmentId) {
+		
 	}
 
 	//Modify the method to use a better approach

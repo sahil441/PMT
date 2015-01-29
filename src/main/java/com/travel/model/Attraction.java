@@ -18,6 +18,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -53,9 +54,10 @@ public class Attraction implements Serializable {
 	@Size(max = 80)
 	private String name;
 
-	@Column(name = "aboutText", length = 255, nullable = false)
+	@Column(name = "aboutText", nullable = false)
 	@NotBlank
-	@Size(max = 255)
+	@Size(max=500)
+	@Lob
 	private String aboutText;
 	
 	@Column(name="phoneNumber")
@@ -66,6 +68,12 @@ public class Attraction implements Serializable {
 	
 	@Column(name="timeRequired")
 	private Integer timeRequired;
+	
+	@Column(name="ticketPrice")
+	private Integer ticketPrice;
+	
+	@Column(name="additionalCommentsOnTicket")
+	private String additionalCommentsOnTicket;
 	
 	@Column(name="prefferedStartTiming") 
 	private String prefferedStartTiming;
@@ -305,4 +313,21 @@ public class Attraction implements Serializable {
 	public void setPopularity(Integer popularity) {
 		this.popularity = popularity;
 	}
+
+	public Integer getTicketPrice() {
+		return ticketPrice;
+	}
+
+	public void setTicketPrice(Integer ticketPrice) {
+		this.ticketPrice = ticketPrice;
+	}
+
+	public String getAdditionalCommentsOnTicket() {
+		return additionalCommentsOnTicket;
+	}
+
+	public void setAdditionalCommentsOnTicket(String additionalCommentsOnTicket) {
+		this.additionalCommentsOnTicket = additionalCommentsOnTicket;
+	}
+	
 }

@@ -43,10 +43,6 @@ directives.directive('autoComplete',
 									}
 							);
 
-							if(filteredCities.indexOf(scope.searchText)===-1){
-								filteredCities.unshift(scope.searchText);
-							}
-
 							scope.suggestions = filteredCities;
 							scope.selectedIndex = -1;
 						});			
@@ -63,10 +59,6 @@ directives.directive('autoComplete',
 									  return tag.lastIndexOf(term, 0) === 0;
 								  }
 						    );
-						  
-						  if(filteredTags.indexOf(scope.searchText)===-1){
-							  filteredTags.unshift(scope.searchText);
-							}
 						  
 						  scope.suggestions = filteredTags;
 						  scope.selectedIndex = -1;

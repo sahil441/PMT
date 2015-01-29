@@ -21,7 +21,7 @@ public class Attachment implements Serializable {
 		@Id
 		@Column(name="id")
 		@GeneratedValue(strategy=GenerationType.IDENTITY)
-		private Long id;
+		private Integer id;
 		
 		@Column(name="size")
 		private long size;
@@ -56,7 +56,7 @@ public class Attachment implements Serializable {
 			this.fileName = fileName;
 		}
 
-		public Long getId() {
+		public Integer getId() {
 			return id;
 		}
 }
